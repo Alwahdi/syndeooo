@@ -89,6 +89,13 @@ export function exportAsJSON(): string {
 }
 
 /**
+ * Helper to check if a value is a design token (has $value property)
+ */
+function isToken(val: unknown): val is { $value: string } {
+  return typeof val === "object" && val !== null && "$value" in val;
+}
+
+/**
  * Export tokens for Style Dictionary format
  */
 export function exportForStyleDictionary() {
@@ -144,16 +151,14 @@ export function exportForStyleDictionary() {
       },
     },
     spacing: Object.fromEntries(
-      Object.entries(primitives.spacing).map(([key, val]) => [
-        key,
-        { value: val.$value },
-      ])
+      Object.entries(primitives.spacing)
+        .filter(([, val]) => isToken(val))
+        .map(([key, val]) => [key, { value: (val as { $value: string }).$value }])
     ),
     borderRadius: Object.fromEntries(
-      Object.entries(primitives.borderRadius).map(([key, val]) => [
-        key,
-        { value: val.$value },
-      ])
+      Object.entries(primitives.borderRadius)
+        .filter(([, val]) => isToken(val))
+        .map(([key, val]) => [key, { value: (val as { $value: string }).$value }])
     ),
   };
 }
@@ -180,12 +185,16 @@ export function exportAsCSSVariables(): string {
 
   // Spacing
   for (const [size, token] of Object.entries(primitives.spacing)) {
-    lines.push(`  --spacing-${size}: ${token.$value};`);
+    if (isToken(token)) {
+      lines.push(`  --spacing-${size}: ${token.$value};`);
+    }
   }
 
   // Border radius
   for (const [size, token] of Object.entries(primitives.borderRadius)) {
-    lines.push(`  --radius-${size}: ${token.$value};`);
+    if (isToken(token)) {
+      lines.push(`  --radius-${size}: ${token.$value};`);
+    }
   }
 
   lines.push("}");
