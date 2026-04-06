@@ -47,7 +47,7 @@ importers:
         version: 7.2.5
       vitest:
         specifier: ^4.0.18
-        version: 4.1.2(@opentelemetry/api@1.9.1)(@types/node@25.3.5)(jsdom@28.1.0)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.3.5)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.1)(yaml@2.8.3))
+        version: 4.1.2(@opentelemetry/api@1.9.1)(@types/node@25.3.5)(jsdom@29.0.1)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.3.5)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.1)(yaml@2.8.3))
 
   apps/api:
     dependencies:
@@ -123,7 +123,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^4.0.18
-        version: 4.1.2(@opentelemetry/api@1.9.1)(@types/node@25.3.5)(jsdom@28.1.0)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.3.5)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.1)(yaml@2.8.3))
+        version: 4.1.2(@opentelemetry/api@1.9.1)(@types/node@25.3.5)(jsdom@29.0.1)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.3.5)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.1)(yaml@2.8.3))
 
   apps/app:
     dependencies:
@@ -176,8 +176,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       lucide-react:
-        specifier: ^0.577.0
-        version: 0.577.0(react@19.2.4)
+        specifier: ^1.7.0
+        version: 1.7.0(react@19.2.4)
       next:
         specifier: 16.2.2
         version: 16.2.2(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -222,8 +222,8 @@ importers:
         specifier: ^6.0.1
         version: 6.0.1(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.3.5)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.1)(yaml@2.8.3))
       jsdom:
-        specifier: ^28.1.0
-        version: 28.1.0
+        specifier: ^29.0.1
+        version: 29.0.1
       tailwindcss:
         specifier: ^4.2.1
         version: 4.2.2
@@ -232,7 +232,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^4.0.18
-        version: 4.1.2(@opentelemetry/api@1.9.1)(@types/node@25.3.5)(jsdom@28.1.0)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.3.5)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.1)(yaml@2.8.3))
+        version: 4.1.2(@opentelemetry/api@1.9.1)(@types/node@25.3.5)(jsdom@29.0.1)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.3.5)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.1)(yaml@2.8.3))
 
   apps/docs:
     devDependencies:
@@ -292,8 +292,8 @@ importers:
         specifier: ^1.4.2
         version: 1.4.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       lucide-react:
-        specifier: ^0.577.0
-        version: 0.577.0(react@19.2.4)
+        specifier: ^1.7.0
+        version: 1.7.0(react@19.2.4)
       next:
         specifier: 16.2.2
         version: 16.2.2(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -368,8 +368,8 @@ importers:
   apps/web:
     dependencies:
       '@arcjet/next':
-        specifier: 1.2.0
-        version: 1.2.0(next@16.2.2(@opentelemetry/api@1.9.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
+        specifier: 1.3.1
+        version: 1.3.1(next@16.2.2(@opentelemetry/api@1.9.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
       '@radix-ui/react-icons':
         specifier: ^1.3.2
         version: 1.3.2(react@19.2.4)
@@ -420,13 +420,13 @@ importers:
         version: 4.1.0
       fumadocs-core:
         specifier: ^16.6.12
-        version: 16.7.10(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.14)(lucide-react@0.577.0(react@19.2.4))(next@16.2.2(@opentelemetry/api@1.9.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(zod@4.3.6)
+        version: 16.7.10(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.14)(lucide-react@1.7.0(react@19.2.4))(next@16.2.2(@opentelemetry/api@1.9.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(zod@4.3.6)
       import-in-the-middle:
         specifier: ^3.0.0
         version: 3.0.0
       lucide-react:
-        specifier: ^0.577.0
-        version: 0.577.0(react@19.2.4)
+        specifier: ^1.7.0
+        version: 1.7.0(react@19.2.4)
       mdx-bundler:
         specifier: ^10.1.1
         version: 10.1.1(esbuild@0.27.7)
@@ -672,7 +672,7 @@ importers:
         version: 7.4.2
       '@prisma/client':
         specifier: 7.6.0
-        version: 7.6.0(prisma@7.4.2(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(typescript@5.9.3)
+        version: 7.6.0(prisma@7.6.0(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(typescript@5.9.3)
       '@prisma/client-runtime-utils':
         specifier: ^7.4.2
         version: 7.6.0
@@ -750,8 +750,8 @@ importers:
         specifier: ^1.4.2
         version: 1.4.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       lucide-react:
-        specifier: ^0.577.0
-        version: 0.577.0(react@19.2.4)
+        specifier: ^1.7.0
+        version: 1.7.0(react@19.2.4)
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -1080,8 +1080,8 @@ importers:
   packages/security:
     dependencies:
       '@arcjet/next':
-        specifier: 1.2.0
-        version: 1.2.0(next@16.2.2(@opentelemetry/api@1.9.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
+        specifier: 1.3.1
+        version: 1.3.1(next@16.2.2(@opentelemetry/api@1.9.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
       '@nosecone/next':
         specifier: 1.2.0
         version: 1.2.0(next@16.2.2(@opentelemetry/api@1.9.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
@@ -1175,9 +1175,6 @@ importers:
 
 packages:
 
-  '@acemir/cssom@0.9.31':
-    resolution: {integrity: sha512-ZnR3GSaH+/vJ0YlHau21FjfLYjMpYVIzTD8M8vIEQvIGxeOXyXdzCI140rrCY862p/C/BbzWsjc1dgnM9mkoTA==}
-
   '@adobe/css-tools@4.4.4':
     resolution: {integrity: sha512-Elp+iwUx5rN5+Y8xLt5/GRoG20WGoDCQ/1Fb+1LiGtvwbDavuSk0jhD/eZdckHAuzcDzccnkv+rEjyWfRx18gg==}
 
@@ -1240,74 +1237,75 @@ packages:
   '@antfu/install-pkg@1.1.0':
     resolution: {integrity: sha512-MGQsmw10ZyI+EJo45CdSER4zEb+p31LpDAFp2Z3gkSd1yqVZGi0Ebx++YTEMonJy4oChEMLsxZ64j8FH6sSqtQ==}
 
-  '@arcjet/analyze-wasm@1.2.0':
-    resolution: {integrity: sha512-UILv081UsPKcbn00DgPGvBUcGQQH1fmqxMbepXgwJyhF/i9YdoChiiR3k9hB/1v7HhDbC0xNQTAKUZt76VdsmA==}
+  '@arcjet/analyze-wasm@1.3.1':
+    resolution: {integrity: sha512-FASvveHGwQ64Q9CzrgmD1JrwMDJMooYbX+Z+55ZV/Y/PXRdI/dLWkJ2aQzww5UOOXq2QUHhZZgLteq+ROxuDog==}
     engines: {node: '>=20'}
 
-  '@arcjet/analyze@1.2.0':
-    resolution: {integrity: sha512-+F/YY6HObd3iZq74ZT0yjdGJ77uc1f6q+Itq3dto2d/9iaZ30YiV67sQl/TmYWbNNO4Hu+b6SRCArdMS+vmAxw==}
+  '@arcjet/analyze@1.3.1':
+    resolution: {integrity: sha512-y2rUKKkiLICaBhMI/SIX+L+hYbC/uvbqb0eT64MW8LGvro8b9AgA8KhBGc38B9EsNUxITQRpeTshFnAlpqN3IA==}
     engines: {node: '>=20'}
 
-  '@arcjet/body@1.2.0':
-    resolution: {integrity: sha512-YzGyW8jwqKoJgr4M1/phUcG5YYuT9lylhumMJV3GN2/YtEG1c2H3f5JBbYUw2nm+A5TvuhBmOBIRucTqJuk+UA==}
+  '@arcjet/body@1.3.1':
+    resolution: {integrity: sha512-NAQ3zWsCWvBT/s5vLZDIMeKJKy54d0bfU854Jtzcujb2VYbgKtK0pSG/TgqroUgJly9GU9m95DXnDiwSln3x+A==}
     engines: {node: '>=20'}
 
-  '@arcjet/cache@1.2.0':
-    resolution: {integrity: sha512-vMPIlf6bIHVU59u313UaLOTWafIy0+aR9QmGr/dNBlNikeAaeGUyD8aj3W7T9G1Teognw+5wYj7BtFW65NZvTg==}
+  '@arcjet/cache@1.3.1':
+    resolution: {integrity: sha512-zowerfYfG/C58mvHZ8Zuj/4gn5kQwb35pq/Oo0ikZJo3pkVIEt1Y+9KcKYOSaoGmEcNZeIInSnCXpH6HAuMyvQ==}
     engines: {node: '>=20'}
 
-  '@arcjet/duration@1.2.0':
-    resolution: {integrity: sha512-ZkIILwQ6tFoQHWiSp8fF3l2Pl+koFyFetNBnb+6sUOzocH/ZhxXZCAmHUE24EQjECEz3Yp3UkmLExWM6Cs/Qmg==}
+  '@arcjet/duration@1.3.1':
+    resolution: {integrity: sha512-SC/dnuFwlQ61SzkYneSnLXQFsf6nhMmxbZoOl5BxzzluBvOKGsE91ONQQcAxgWV1eeD7aQAQ8hiBk7JxTCIyNA==}
     engines: {node: '>=20'}
 
-  '@arcjet/env@1.2.0':
-    resolution: {integrity: sha512-fLVBRKmOrSNUz+FjbPB6DPNbk2A/93QpeU0tARBH8TW7ReBdMBoH/6vyi/eXrIePpdrVddFgH1iBN7cm8vNZ3A==}
+  '@arcjet/env@1.3.1':
+    resolution: {integrity: sha512-1hNM+Rr8Te/TxjJkMUfGiz6z9Bu7batrlYFo/VbU3gtvlrbBjH1c3/4PNzGjcvM6e4RZAbEGpuShu6vxeyAZlQ==}
     engines: {node: '>=20'}
 
-  '@arcjet/headers@1.2.0':
-    resolution: {integrity: sha512-7ByhpDmvEMxM9HvibPiJXpJmbyjHVPZsik67wE2WVZmiubCWZGImjzRroplfsm0mSCnSGcVEuol6TUErbTaZPA==}
+  '@arcjet/headers@1.3.1':
+    resolution: {integrity: sha512-krYRdbvVGOENJKREyKPmX2ivfytsfW1uADgGY06pt8g/T5HubXskJnNAG/LRQ7/HoXdAuXzLKPbSs9xVTF4yoQ==}
     engines: {node: '>=20'}
 
-  '@arcjet/ip@1.2.0':
-    resolution: {integrity: sha512-ATqIgD41+M8V1eVFM1S5mr1wHiOv6GieAjr/ROqSZmFIDstPoPE6mz9b7vB2DqngkRltxVGnKh1yHhNuHsMt2Q==}
+  '@arcjet/ip@1.3.1':
+    resolution: {integrity: sha512-2MUf9STwRuaQ0wNkcj9fyHdmVCwat7DjCkdiLLL4Ra/0sG8jxpQ3RXl8ds+fRgoSARNaNFKJII2ybCT5BmktNg==}
     engines: {node: '>=20'}
 
-  '@arcjet/logger@1.2.0':
-    resolution: {integrity: sha512-8m7VQb50aSyM1e8G46nDEzLjBC5Bm1by6WrPuDVBg+fTqK5qm1zz67VPukOKuEMsZ5tsvkIkemUcVh5OoyGJqg==}
+  '@arcjet/logger@1.3.1':
+    resolution: {integrity: sha512-CruNJtJJR9iRItG64JsFWoR1TGxRf++KdQDapbcU9TY1zEeWffx44Zt3g8sCMX6M2vTkPpzVgv7wLeCjX+39Bg==}
     engines: {node: '>=20'}
 
-  '@arcjet/next@1.2.0':
-    resolution: {integrity: sha512-es2aSUAYy8t0hb7QPtIeWr5c/tbphEnsBSROwikF6Lfhb3tOAMZNtlK3u4YQwKPG/EOr/js22ND6qpRI+3jdRQ==}
+  '@arcjet/next@1.3.1':
+    resolution: {integrity: sha512-QUaE/cDvtBIc7EcKatN2L/EdQ+7K+swjMH0D6BiEQrXzycg2RWNxsdDVJYKOSqXlxNn4QUvY7lT+h6EQHLnjGQ==}
     engines: {node: '>=20'}
     peerDependencies:
       next: '>=13'
 
-  '@arcjet/protocol@1.2.0':
-    resolution: {integrity: sha512-v0VDEtZKkJtzVJvEKaWgt+3/pAJt72blLIzdDnrsWkrv9TZLfbkjDYd3fwxPXjKYoMeFCuCHe4UpW9JdJPkV9Q==}
+  '@arcjet/protocol@1.3.1':
+    resolution: {integrity: sha512-aoKbuLNXsNvLg844Tlc8mij6Z1bl5iDX+gfBZyG2fL4ZKiHf6C/MQQIUx8TknKfednSHWCVD3L3ASnqPe9EJGg==}
     engines: {node: '>=20'}
 
-  '@arcjet/runtime@1.2.0':
-    resolution: {integrity: sha512-5wF60+wUmVKfuwyaU0x/VwOOk/8MGKlRBmJaP7yn+Rt/wwWsxeYd063jhovdjdLSR3izKwcdQnt1D2Mp8RRfiw==}
+  '@arcjet/runtime@1.3.1':
+    resolution: {integrity: sha512-fS/rXaUD7WXutnUliOJQXcqBf50NfkWsy7wZ3xZcWdoeNsLjNkJiIkRPLxdXE4p7+jSWCZUmqkHeVH5UJ6BuMw==}
     engines: {node: '>=20'}
 
-  '@arcjet/sprintf@1.2.0':
-    resolution: {integrity: sha512-mRQ5J8qk8vg8DaIWHEhPg7RPGLw9QxUqX4m8AUJBBm1IfQiq0maGfpk8DrDue6v9st+4kM2O4/V0JBKdP1nDzg==}
+  '@arcjet/sprintf@1.3.1':
+    resolution: {integrity: sha512-F2LujyAYiPYgG7NlHrVrY6eceN08Zn/DcL2Myxxv2K3FIP5h+Eq2lMGPuhu2ICr24bO4PROXEfC4uXl8Fe8/9A==}
     engines: {node: '>=20'}
 
-  '@arcjet/stable-hash@1.2.0':
-    resolution: {integrity: sha512-M2+ckL6yf5rzNY+/04P2cBv6EYuOJStrNBLQ/WmXnPtrGjz62JwfbxmFI00W5i1/79CC/fK1izdubFc/XhWKgg==}
+  '@arcjet/stable-hash@1.3.1':
+    resolution: {integrity: sha512-1wxbNznMa8PPwZgDJkO5ZiTcMT+KyILOicFMFICA8fd1K/2LeDwLjFLQIFartTged322+m4Ztc+wjTiYpPZElw==}
     engines: {node: '>=20'}
 
-  '@arcjet/transport@1.2.0':
-    resolution: {integrity: sha512-hBWKCVE0AN3+jIT8TaPyIS8SbLWXJUXyapR1yWX250Zmf4km7j9TsSTcULdE2s7CFzN06/JOLz1Ec3Z/HgewKw==}
+  '@arcjet/transport@1.3.1':
+    resolution: {integrity: sha512-iXTWtCL1Tl/RkB+oZBzt6PNRz0tNyt87JagCj8JjPvA3QsEfcxQlt9hs4rAEVvanASi17k1wFhbjOF1ejBzFnQ==}
     engines: {node: '>=20'}
 
   '@asamuzakjp/css-color@5.1.5':
     resolution: {integrity: sha512-8cMAA1bE66Mb/tfmkhcfJLjEPgyT7SSy6lW6id5XL113ai1ky76d/1L27sGnXCMsLfq66DInAU3OzuahB4lu9Q==}
     engines: {node: ^20.19.0 || ^22.12.0 || >=24.0.0}
 
-  '@asamuzakjp/dom-selector@6.8.1':
-    resolution: {integrity: sha512-MvRz1nCqW0fsy8Qz4dnLIvhOlMzqDVBabZx6lH+YywFDdjXhMY37SmpV1XFX3JzG5GWHn63j6HX6QPr3lZXHvQ==}
+  '@asamuzakjp/dom-selector@7.0.6':
+    resolution: {integrity: sha512-Tgmk6EQM0nc9xvp7sEHRVavbknhb/vGKht+04yAT3t5KQwZ02CSobCtcFgaHH04ZrjD1BhEKNA8tRhzFV20gkA==}
+    engines: {node: ^20.19.0 || ^22.12.0 || >=24.0.0}
 
   '@asamuzakjp/nwsapi@2.3.9':
     resolution: {integrity: sha512-n8GuYSrI9bF7FFZ/SjhwevlHc8xaVlb/7HmHelnc/PZXBD2ZR49NnN9sMMuDdEGPeeRQ5d0hqlSlEpgCX3Wl0Q==}
@@ -4738,6 +4736,9 @@ packages:
   '@rolldown/pluginutils@1.0.0-rc.7':
     resolution: {integrity: sha512-qujRfC8sFVInYSPPMLQByRh7zhwkGFS4+tyMQ83srV1qrxL4g8E2tyxVVyxd0+8QeBM1mIk9KbWxkegRr76XzA==}
 
+  '@rolldown/pluginutils@1.0.0-rc.7':
+    resolution: {integrity: sha512-qujRfC8sFVInYSPPMLQByRh7zhwkGFS4+tyMQ83srV1qrxL4g8E2tyxVVyxd0+8QeBM1mIk9KbWxkegRr76XzA==}
+
   '@rollup/plugin-commonjs@28.0.1':
     resolution: {integrity: sha512-+tNWdlWKbpB3WgBN7ijjYkq9X5uhjmcvyjEght4NmH5fAU++zfQzAJ6wumLS+dNcvwEZhKx2Z+skY8m7v0wGSA==}
     engines: {node: '>=16.0.0 || 14 >= 14.17'}
@@ -5966,6 +5967,19 @@ packages:
       babel-plugin-react-compiler:
         optional: true
 
+  '@vitejs/plugin-react@6.0.1':
+    resolution: {integrity: sha512-l9X/E3cDb+xY3SWzlG1MOGt2usfEHGMNIaegaUGFsLkb3RCn/k8/TOXBcab+OndDI4TBtktT8/9BwwW8Vi9KUQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    peerDependencies:
+      '@rolldown/plugin-babel': ^0.1.7 || ^0.2.0
+      babel-plugin-react-compiler: ^1.0.0
+      vite: ^8.0.0
+    peerDependenciesMeta:
+      '@rolldown/plugin-babel':
+        optional: true
+      babel-plugin-react-compiler:
+        optional: true
+
   '@vitest/expect@3.2.4':
     resolution: {integrity: sha512-Io0yyORnB6sikFlt8QW5K7slY4OjqNX9jmJQ02QDda8lyM6B5oNgVWoSoKPac8/kgnCUzuHQKrSLtu/uOqqrig==}
 
@@ -6110,10 +6124,6 @@ packages:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
 
-  agent-base@7.1.4:
-    resolution: {integrity: sha512-MnA+YT8fwfJPgBx3m60MNqakm30XOkyIoH1y6huTQvC0PwZG7ki8NacLBcrPbNoo8vEZy7Jpuk7+jMO+CUovTQ==}
-    engines: {node: '>= 14'}
-
   agentkeepalive@4.6.0:
     resolution: {integrity: sha512-kja8j7PjmncONqaTsB8fQ+wE2mSU2DJ9D4XKoJ5PFWIdRMa6SLSN1ff4mOr4jCbfRSsxR4keIiySJU0N9T5hIQ==}
     engines: {node: '>= 8.0.0'}
@@ -6224,8 +6234,8 @@ packages:
     resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
     engines: {node: '>= 8'}
 
-  arcjet@1.2.0:
-    resolution: {integrity: sha512-i6RXaByh1wjVnOk8SKL87+2UlKKES/Q7BahnwJ/Isuih9fqAh3paEq/nikf5IH1OxzH5SqgnFwFxZCFKCw2cUA==}
+  arcjet@1.3.1:
+    resolution: {integrity: sha512-dcjPkWgk0BqSIcYdAqEqscXt0hBB6nMjybzkNiY4FW4s/T9MVIvIG09fiXUpqXKLPLTkjhUWc+oAfV5jtnNR+w==}
     engines: {node: '>=20'}
 
   arg@4.1.3:
@@ -6902,10 +6912,6 @@ packages:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
     engines: {node: '>=4'}
     hasBin: true
-
-  cssstyle@6.2.0:
-    resolution: {integrity: sha512-Fm5NvhYathRnXNVndkUsCCuR63DCLVVwGOOwQw782coXFi5HhkXdu289l59HlXZBawsyNccXfWRYvLzcDCdDig==}
-    engines: {node: '>=20'}
 
   csstype@3.1.3:
     resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
@@ -8128,10 +8134,6 @@ packages:
     resolution: {integrity: sha512-4FbRdAX+bSdmo4AUFuS0WNiPz8NgFt+r8ThgNWmlrjQjt1Q7ZR9+zTlce2859x4KSXrwIsaeTqDoKQmtP8pLmQ==}
     engines: {node: '>= 0.8'}
 
-  http-proxy-agent@7.0.2:
-    resolution: {integrity: sha512-T1gkAiYYDWYx3V5Bmyu7HcfcvL7mUrTWiM6yOfa3PIphViJ/gFPbvidQ+veqSOHci/PxBcDabeUNCzpOODJZig==}
-    engines: {node: '>= 14'}
-
   http-proxy@1.18.1:
     resolution: {integrity: sha512-7mz/721AbnJwIVbnaSv1Cz3Am0ZLT/UBwkC92VlxhXv/k/BBQfM2fXElQNC27BVGr0uwUpplYPQM9LnaBMR5NQ==}
     engines: {node: '>=8.0.0'}
@@ -8145,10 +8147,6 @@ packages:
   https-proxy-agent@5.0.1:
     resolution: {integrity: sha512-dFcAjpTQFgoLMzC2VwU+C/CbS7uRL0lWmxDITmqm7C+7F0Odmj6s9l6alZc6AELXhrnggM2CeWSXHGOdX2YtwA==}
     engines: {node: '>= 6'}
-
-  https-proxy-agent@7.0.6:
-    resolution: {integrity: sha512-vK9P5/iUfdl95AI+JVyUuIcVtd4ofvtrOr3HNtM2yxC9bnMbEdp3x01OhQNnjb8IJYi38VlTE3mBXwcfvywuSw==}
-    engines: {node: '>= 14'}
 
   human-signals@2.1.0:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
@@ -8526,9 +8524,9 @@ packages:
     resolution: {integrity: sha512-qQKT4zQxXl8lLwBtHMWwaTcGfFOZviOJet3Oy/xmGk2gZH677CJM9EvtfdSkgWcATZhj/55JZ0rmy3myCT5lsA==}
     hasBin: true
 
-  jsdom@28.1.0:
-    resolution: {integrity: sha512-0+MoQNYyr2rBHqO1xilltfDjV9G7ymYGlAUazgcDLQaUf8JDHbuGwsxN6U9qWaElZ4w1B2r7yEGIL3GdeW3Rug==}
-    engines: {node: ^20.19.0 || ^22.12.0 || >=24.0.0}
+  jsdom@29.0.1:
+    resolution: {integrity: sha512-z6JOK5gRO7aMybVq/y/MlIpKh8JIi68FBKMUtKkK2KH/wMSRlCxQ682d08LB9fYXplyY/UXG8P4XXTScmdjApg==}
+    engines: {node: ^20.19.0 || ^22.13.0 || >=24.0.0}
     peerDependencies:
       canvas: ^3.0.0
     peerDependenciesMeta:
@@ -8816,8 +8814,8 @@ packages:
   lower-case@2.0.2:
     resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}
 
-  lru-cache@11.2.7:
-    resolution: {integrity: sha512-aY/R+aEsRelme17KGQa/1ZSIpLpNYYrhcrepKTZgE+W3WM16YMCaPwOHLHsmopZHELU0Ojin1lPVxKR0MihncA==}
+  lru-cache@11.3.0:
+    resolution: {integrity: sha512-sr8xPKE25m6vJVcrdn6NxtC0fVfuPowbscLypegRgOm0yXSqr5JNHCAY3hnusdJ7HRBW04j6Ip4khvHU778DuQ==}
     engines: {node: 20 || >=22}
 
   lru-cache@5.1.1:
@@ -8832,8 +8830,8 @@ packages:
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  lucide-react@0.577.0:
-    resolution: {integrity: sha512-4LjoFv2eEPwYDPg/CUdBJQSDfPyzXCRrVW1X7jrx/trgxnxkHFjnVZINbzvzxjN70dxychOfg+FTYwBiS3pQ5A==}
+  lucide-react@1.7.0:
+    resolution: {integrity: sha512-yI7BeItCLZJTXikmK4KNUGCKoGzSvbKlfCvw44bU4fXAL6v3gYS4uHD1jzsLkfwODYwI6Drw5Tu9Z5ulDe0TSg==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -11553,8 +11551,6 @@ packages:
 
 snapshots:
 
-  '@acemir/cssom@0.9.31': {}
-
   '@adobe/css-tools@4.4.4': {}
 
   '@ai-sdk/gateway@3.0.88(zod@4.3.6)':
@@ -11620,55 +11616,55 @@ snapshots:
       package-manager-detector: 1.6.0
       tinyexec: 1.0.4
 
-  '@arcjet/analyze-wasm@1.2.0': {}
+  '@arcjet/analyze-wasm@1.3.1': {}
 
-  '@arcjet/analyze@1.2.0':
+  '@arcjet/analyze@1.3.1':
     dependencies:
-      '@arcjet/analyze-wasm': 1.2.0
-      '@arcjet/protocol': 1.2.0
+      '@arcjet/analyze-wasm': 1.3.1
+      '@arcjet/protocol': 1.3.1
 
-  '@arcjet/body@1.2.0': {}
+  '@arcjet/body@1.3.1': {}
 
-  '@arcjet/cache@1.2.0': {}
+  '@arcjet/cache@1.3.1': {}
 
-  '@arcjet/duration@1.2.0': {}
+  '@arcjet/duration@1.3.1': {}
 
-  '@arcjet/env@1.2.0': {}
+  '@arcjet/env@1.3.1': {}
 
-  '@arcjet/headers@1.2.0': {}
+  '@arcjet/headers@1.3.1': {}
 
-  '@arcjet/ip@1.2.0': {}
+  '@arcjet/ip@1.3.1': {}
 
-  '@arcjet/logger@1.2.0':
+  '@arcjet/logger@1.3.1':
     dependencies:
-      '@arcjet/sprintf': 1.2.0
+      '@arcjet/sprintf': 1.3.1
 
-  '@arcjet/next@1.2.0(next@16.2.2(@opentelemetry/api@1.9.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))':
+  '@arcjet/next@1.3.1(next@16.2.2(@opentelemetry/api@1.9.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))':
     dependencies:
-      '@arcjet/body': 1.2.0
-      '@arcjet/env': 1.2.0
-      '@arcjet/headers': 1.2.0
-      '@arcjet/ip': 1.2.0
-      '@arcjet/logger': 1.2.0
-      '@arcjet/protocol': 1.2.0
-      '@arcjet/transport': 1.2.0
-      arcjet: 1.2.0
+      '@arcjet/body': 1.3.1
+      '@arcjet/env': 1.3.1
+      '@arcjet/headers': 1.3.1
+      '@arcjet/ip': 1.3.1
+      '@arcjet/logger': 1.3.1
+      '@arcjet/protocol': 1.3.1
+      '@arcjet/transport': 1.3.1
+      arcjet: 1.3.1
       next: 16.2.2(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
 
-  '@arcjet/protocol@1.2.0':
+  '@arcjet/protocol@1.3.1':
     dependencies:
-      '@arcjet/cache': 1.2.0
+      '@arcjet/cache': 1.3.1
       '@bufbuild/protobuf': 2.11.0
       '@connectrpc/connect': 2.1.1(@bufbuild/protobuf@2.11.0)
       typeid-js: 1.2.0
 
-  '@arcjet/runtime@1.2.0': {}
+  '@arcjet/runtime@1.3.1': {}
 
-  '@arcjet/sprintf@1.2.0': {}
+  '@arcjet/sprintf@1.3.1': {}
 
-  '@arcjet/stable-hash@1.2.0': {}
+  '@arcjet/stable-hash@1.3.1': {}
 
-  '@arcjet/transport@1.2.0':
+  '@arcjet/transport@1.3.1':
     dependencies:
       '@bufbuild/protobuf': 2.11.0
       '@connectrpc/connect': 2.1.1(@bufbuild/protobuf@2.11.0)
@@ -11681,15 +11677,15 @@ snapshots:
       '@csstools/css-color-parser': 4.0.2(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)
       '@csstools/css-parser-algorithms': 4.0.0(@csstools/css-tokenizer@4.0.0)
       '@csstools/css-tokenizer': 4.0.0
-      lru-cache: 11.2.7
+      lru-cache: 11.3.0
 
-  '@asamuzakjp/dom-selector@6.8.1':
+  '@asamuzakjp/dom-selector@7.0.6':
     dependencies:
       '@asamuzakjp/nwsapi': 2.3.9
       bidi-js: 1.0.3
       css-tree: 3.2.1
       is-potential-custom-element-name: 1.0.1
-      lru-cache: 11.2.7
+      lru-cache: 11.3.0
 
   '@asamuzakjp/nwsapi@2.3.9': {}
 
@@ -14079,7 +14075,7 @@ snapshots:
 
   '@prisma/client-runtime-utils@7.6.0': {}
 
-  '@prisma/client@7.6.0(prisma@7.4.2(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(typescript@5.9.3)':
+  '@prisma/client@7.6.0(prisma@7.6.0(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(typescript@5.9.3)':
     dependencies:
       '@prisma/client-runtime-utils': 7.6.0
     optionalDependencies:
@@ -15191,6 +15187,8 @@ snapshots:
     optional: true
 
   '@rolldown/pluginutils@1.0.0-rc.12': {}
+
+  '@rolldown/pluginutils@1.0.0-rc.7': {}
 
   '@rolldown/pluginutils@1.0.0-rc.7': {}
 
@@ -16610,6 +16608,11 @@ snapshots:
       '@rolldown/pluginutils': 1.0.0-rc.7
       vite: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.3.5)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.1)(yaml@2.8.3)
 
+  '@vitejs/plugin-react@6.0.1(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.3.5)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.1)(yaml@2.8.3))':
+    dependencies:
+      '@rolldown/pluginutils': 1.0.0-rc.7
+      vite: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.3.5)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.1)(yaml@2.8.3)
+
   '@vitest/expect@3.2.4':
     dependencies:
       '@types/chai': 5.2.3
@@ -16800,8 +16803,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  agent-base@7.1.4: {}
-
   agentkeepalive@4.6.0:
     dependencies:
       humanize-ms: 1.2.1
@@ -16909,15 +16910,15 @@ snapshots:
       normalize-path: 3.0.0
       picomatch: 2.3.2
 
-  arcjet@1.2.0:
+  arcjet@1.3.1:
     dependencies:
-      '@arcjet/analyze': 1.2.0
-      '@arcjet/cache': 1.2.0
-      '@arcjet/duration': 1.2.0
-      '@arcjet/headers': 1.2.0
-      '@arcjet/protocol': 1.2.0
-      '@arcjet/runtime': 1.2.0
-      '@arcjet/stable-hash': 1.2.0
+      '@arcjet/analyze': 1.3.1
+      '@arcjet/cache': 1.3.1
+      '@arcjet/duration': 1.3.1
+      '@arcjet/headers': 1.3.1
+      '@arcjet/protocol': 1.3.1
+      '@arcjet/runtime': 1.3.1
+      '@arcjet/stable-hash': 1.3.1
 
   arg@4.1.3: {}
 
@@ -17659,13 +17660,6 @@ snapshots:
   css.escape@1.5.1: {}
 
   cssesc@3.0.0: {}
-
-  cssstyle@6.2.0:
-    dependencies:
-      '@asamuzakjp/css-color': 5.1.5
-      '@csstools/css-syntax-patches-for-csstree': 1.1.2(css-tree@3.2.1)
-      css-tree: 3.2.1
-      lru-cache: 11.2.7
 
   csstype@3.1.3: {}
 
@@ -18714,7 +18708,7 @@ snapshots:
   fsevents@2.3.3:
     optional: true
 
-  fumadocs-core@16.7.10(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.14)(lucide-react@0.577.0(react@19.2.4))(next@16.2.2(@opentelemetry/api@1.9.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(zod@4.3.6):
+  fumadocs-core@16.7.10(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.14)(lucide-react@1.7.0(react@19.2.4))(next@16.2.2(@opentelemetry/api@1.9.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(zod@4.3.6):
     dependencies:
       '@formatjs/intl-localematcher': 0.8.2
       '@orama/orama': 3.1.18
@@ -18745,7 +18739,7 @@ snapshots:
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
       '@types/react': 19.2.14
-      lucide-react: 0.577.0(react@19.2.4)
+      lucide-react: 1.7.0(react@19.2.4)
       next: 16.2.2(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
@@ -19130,13 +19124,6 @@ snapshots:
       statuses: 2.0.2
       toidentifier: 1.0.1
 
-  http-proxy-agent@7.0.2:
-    dependencies:
-      agent-base: 7.1.4
-      debug: 4.4.3
-    transitivePeerDependencies:
-      - supports-color
-
   http-proxy@1.18.1:
     dependencies:
       eventemitter3: 4.0.7
@@ -19152,13 +19139,6 @@ snapshots:
   https-proxy-agent@5.0.1:
     dependencies:
       agent-base: 6.0.2
-      debug: 4.4.3
-    transitivePeerDependencies:
-      - supports-color
-
-  https-proxy-agent@7.0.6:
-    dependencies:
-      agent-base: 7.1.4
       debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
@@ -19488,19 +19468,19 @@ snapshots:
     dependencies:
       argparse: 2.0.1
 
-  jsdom@28.1.0:
+  jsdom@29.0.1:
     dependencies:
-      '@acemir/cssom': 0.9.31
-      '@asamuzakjp/dom-selector': 6.8.1
+      '@asamuzakjp/css-color': 5.1.5
+      '@asamuzakjp/dom-selector': 7.0.6
       '@bramus/specificity': 2.4.2
+      '@csstools/css-syntax-patches-for-csstree': 1.1.2(css-tree@3.2.1)
       '@exodus/bytes': 1.15.0
-      cssstyle: 6.2.0
+      css-tree: 3.2.1
       data-urls: 7.0.0
       decimal.js: 10.6.0
       html-encoding-sniffer: 6.0.0
-      http-proxy-agent: 7.0.2
-      https-proxy-agent: 7.0.6
       is-potential-custom-element-name: 1.0.1
+      lru-cache: 11.3.0
       parse5: 8.0.0
       saxes: 6.0.0
       symbol-tree: 3.2.4
@@ -19513,7 +19493,6 @@ snapshots:
       xml-name-validator: 5.0.0
     transitivePeerDependencies:
       - '@noble/hashes'
-      - supports-color
 
   jsesc@3.1.0: {}
 
@@ -19750,7 +19729,7 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  lru-cache@11.2.7: {}
+  lru-cache@11.3.0: {}
 
   lru-cache@5.1.1:
     dependencies:
@@ -19762,7 +19741,7 @@ snapshots:
     dependencies:
       react: 19.2.4
 
-  lucide-react@0.577.0(react@19.2.4):
+  lucide-react@1.7.0(react@19.2.4):
     dependencies:
       react: 19.2.4
 
@@ -20808,7 +20787,7 @@ snapshots:
 
   path-scurry@2.0.2:
     dependencies:
-      lru-cache: 11.2.7
+      lru-cache: 11.3.0
       minipass: 7.1.3
 
   path-to-regexp@6.2.1: {}
@@ -22828,7 +22807,7 @@ snapshots:
       - '@emnapi/core'
       - '@emnapi/runtime'
 
-  vitest@4.1.2(@opentelemetry/api@1.9.1)(@types/node@25.3.5)(jsdom@28.1.0)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.3.5)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.1)(yaml@2.8.3)):
+  vitest@4.1.2(@opentelemetry/api@1.9.1)(@types/node@25.3.5)(jsdom@29.0.1)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.3.5)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.1)(yaml@2.8.3)):
     dependencies:
       '@vitest/expect': 4.1.2
       '@vitest/mocker': 4.1.2(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.3.5)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.1)(yaml@2.8.3))
@@ -22853,7 +22832,7 @@ snapshots:
     optionalDependencies:
       '@opentelemetry/api': 1.9.1
       '@types/node': 25.3.5
-      jsdom: 28.1.0
+      jsdom: 29.0.1
     transitivePeerDependencies:
       - msw
 
