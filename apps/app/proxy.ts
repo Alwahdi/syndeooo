@@ -4,17 +4,19 @@ import {
   noseconeOptionsWithToolbar,
   securityMiddleware,
 } from "@repo/security/proxy";
-import type { NextProxy } from "next/server";
+import type { NextRequest } from "next/server";
 import { env } from "./env";
 
 const securityHeaders = env.FLAGS_SECRET
   ? securityMiddleware(noseconeOptionsWithToolbar)
   : securityMiddleware(noseconeOptions);
 
-// Clerk middleware wraps other middleware in its callback
-// For apps using Clerk, compose middleware inside authMiddleware callback
-// For apps without Clerk, use createNEMO for composition (see apps/web)
-export default authMiddleware(() => securityHeaders()) as unknown as NextProxy;
+// Better Auth middleware checks for session cookie on protected routes
+// Security headers are applied in the callback
+export default authMiddleware((request: NextRequest) => {
+  const response = securityHeaders();
+  return response;
+});
 
 export const config = {
   matcher: [

@@ -1,5 +1,5 @@
 import { analytics } from "@repo/analytics/server";
-import { clerkClient } from "@repo/auth/server";
+import { database } from "@repo/database";
 import { parseError } from "@repo/observability/error";
 import { log } from "@repo/observability/log";
 import type { Stripe } from "@repo/payments";
@@ -9,12 +9,16 @@ import { NextResponse } from "next/server";
 import { env } from "@/env";
 
 const getUserFromCustomerId = async (customerId: string) => {
-  const clerk = await clerkClient();
-  const users = await clerk.users.getUserList();
-
-  const user = users.data.find(
-    (currentUser) => currentUser.privateMetadata.stripeCustomerId === customerId
-  );
+  const user = await database.user.findFirst({
+    where: {
+      accounts: {
+        some: {
+          providerId: "stripe",
+          accountId: customerId,
+        },
+      },
+    },
+  });
 
   return user;
 };

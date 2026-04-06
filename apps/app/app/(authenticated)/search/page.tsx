@@ -1,4 +1,4 @@
-import { auth } from "@repo/auth/server";
+import { getActiveOrganizationId } from "@repo/auth/server";
 import { database } from "@repo/database";
 import { notFound, redirect } from "next/navigation";
 import { Header } from "../components/header";
@@ -29,7 +29,7 @@ const SearchPage = async ({ searchParams }: SearchPageProperties) => {
       },
     },
   });
-  const { orgId } = await auth();
+  const orgId = await getActiveOrganizationId();
 
   if (!orgId) {
     notFound();

@@ -8,7 +8,7 @@ import {
   securityMiddleware,
 } from "@repo/security/proxy";
 import { createNEMO } from "@rescale/nemo";
-import { type NextProxy, type NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { env } from "@/env";
 
 export const config = {
@@ -45,7 +45,7 @@ const arcjetMiddleware = async (request: NextRequest) => {
   }
 };
 
-// Compose non-Clerk middleware with Nemo
+// Compose non-auth middleware with Nemo
 const composedMiddleware = createNEMO(
   {},
   {
@@ -53,17 +53,17 @@ const composedMiddleware = createNEMO(
   }
 );
 
-// Clerk middleware wraps other middleware in its callback
-export default authMiddleware(async (_auth, request, event) => {
+// Auth middleware wraps other middleware in its callback
+export default authMiddleware(async (request) => {
   // Run security headers first
   const headersResponse = securityHeaders();
 
   // Then run composed middleware (i18n + arcjet)
   const middlewareResponse = await composedMiddleware(
     request as unknown as NextRequest,
-    event
+    {} as never
   );
 
   // Return middleware response if it exists, otherwise headers response
   return middlewareResponse || headersResponse;
-}) as unknown as NextProxy;
+});

@@ -1,6 +1,7 @@
 "use client";
 
-import { OrganizationSwitcher, UserButton } from "@repo/auth/client";
+import { OrganizationSwitcher } from "@repo/auth/components/organization-switcher";
+import { UserButton } from "@repo/auth/components/user-button";
 import { ModeToggle } from "@repo/design-system/components/mode-toggle";
 import { Button } from "@repo/design-system/components/ui/button";
 import {

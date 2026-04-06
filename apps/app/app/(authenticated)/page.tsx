@@ -1,4 +1,4 @@
-import { auth } from "@repo/auth/server";
+import { getActiveOrganizationId } from "@repo/auth/server";
 import { database } from "@repo/database";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 const App = async () => {
   const pages = await database.page.findMany();
-  const { orgId } = await auth();
+  const orgId = await getActiveOrganizationId();
 
   if (!orgId) {
     notFound();
