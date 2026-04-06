@@ -275,10 +275,10 @@ export const semantics = {
     },
     feedback: {
       success: { $value: "{primitives.color.emerald.400}", resolvedValue: primitives.color.emerald[400].$value },
-      successForeground: { $value: "{primitives.color.neutral.950}", resolvedValue: primitives.color.neutral[950].$value },
+      successForeground: { $value: "{primitives.color.neutral.0}", resolvedValue: primitives.color.neutral[0].$value },
       successMuted: { $value: "{primitives.color.emerald.700}", resolvedValue: primitives.color.emerald[700].$value },
       warning: { $value: "{primitives.color.amber.400}", resolvedValue: primitives.color.amber[400].$value },
-      warningForeground: { $value: "{primitives.color.neutral.950}", resolvedValue: primitives.color.neutral[950].$value },
+      warningForeground: { $value: "{primitives.color.neutral.0}", resolvedValue: primitives.color.neutral[0].$value },
       warningMuted: { $value: "{primitives.color.amber.700}", resolvedValue: primitives.color.amber[700].$value },
       error: { $value: "{primitives.color.red.400}", resolvedValue: primitives.color.red[400].$value },
       errorForeground: { $value: "{primitives.color.neutral.0}", resolvedValue: primitives.color.neutral[0].$value },

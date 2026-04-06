@@ -38,7 +38,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
     const [isFocused, setIsFocused] = React.useState(false);
 
     const labels = {
-      minLength: strengthLabels?.minLength ?? "At least 6 characters",
+      minLength: strengthLabels?.minLength ?? "At least 8 characters",
       hasNumber: strengthLabels?.hasNumber ?? "Contains a number",
       hasUppercase: strengthLabels?.hasUppercase ?? "Contains uppercase",
       strengthLabel: strengthLabels?.strengthLabel ?? "Password strength",
@@ -48,7 +48,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
 
     const strengthChecks: StrengthCheck[] = React.useMemo(
       () => [
-        { label: labels.minLength, valid: value.length >= 6 },
+        { label: labels.minLength, valid: value.length >= 8 },
         { label: labels.hasNumber, valid: /\d/.test(value) },
         { label: labels.hasUppercase, valid: /[A-Z]/.test(value) },
       ],
