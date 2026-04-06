@@ -90,7 +90,7 @@ describe("SignUp component", () => {
 
     await user.type(screen.getByLabelText("Name"), "John");
     await user.type(screen.getByLabelText("Email"), "john@example.com");
-    await user.type(screen.getByLabelText("Password"), "pass");
+    await user.type(screen.getByLabelText("Password"), "password123");
     await user.click(screen.getByRole("button", { name: "Create account" }));
 
     await waitFor(() => {
@@ -107,7 +107,7 @@ describe("SignUp component", () => {
 
     await user.type(screen.getByLabelText("Name"), "John");
     await user.type(screen.getByLabelText("Email"), "john@example.com");
-    await user.type(screen.getByLabelText("Password"), "pass");
+    await user.type(screen.getByLabelText("Password"), "password123");
     await user.click(screen.getByRole("button", { name: "Create account" }));
 
     await waitFor(() => {
@@ -171,7 +171,7 @@ describe("SignUp component", () => {
 
     await user.type(screen.getByLabelText("Name"), "John");
     await user.type(screen.getByLabelText("Email"), "john@example.com");
-    await user.type(screen.getByLabelText("Password"), "pass");
+    await user.type(screen.getByLabelText("Password"), "password123");
     await user.click(screen.getByRole("button", { name: "Create account" }));
 
     await waitFor(() => {
@@ -189,5 +189,39 @@ describe("SignUp component", () => {
     expect(
       screen.getByPlaceholderText("Create a password")
     ).toBeInTheDocument();
+  });
+
+  it("rejects password shorter than 8 characters", async () => {
+    const user = userEvent.setup();
+    render(<SignUp />);
+
+    await user.type(screen.getByLabelText("Name"), "Test User");
+    await user.type(screen.getByLabelText("Email"), "test@example.com");
+    await user.type(screen.getByLabelText("Password"), "short");
+    await user.click(screen.getByRole("button", { name: "Create account" }));
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("Password must be at least 8 characters")
+      ).toBeInTheDocument();
+    });
+
+    // Should NOT have called the API
+    expect(mockSignUpEmail).not.toHaveBeenCalled();
+  });
+
+  it("allows password of exactly 8 characters", async () => {
+    mockSignUpEmail.mockResolvedValue({ data: { user: { id: "1" } } });
+    const user = userEvent.setup();
+    render(<SignUp />);
+
+    await user.type(screen.getByLabelText("Name"), "Test User");
+    await user.type(screen.getByLabelText("Email"), "test@example.com");
+    await user.type(screen.getByLabelText("Password"), "12345678");
+    await user.click(screen.getByRole("button", { name: "Create account" }));
+
+    await waitFor(() => {
+      expect(mockSignUpEmail).toHaveBeenCalled();
+    });
   });
 });

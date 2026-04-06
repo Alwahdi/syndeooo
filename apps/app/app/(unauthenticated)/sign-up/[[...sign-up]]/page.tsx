@@ -1,6 +1,7 @@
 import { createMetadata } from "@repo/seo/metadata";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 
 const title = "Create an account";
 const description = "Enter your details to get started.";
@@ -10,6 +11,23 @@ const SignUp = dynamic(() =>
 
 export const metadata: Metadata = createMetadata({ title, description });
 
-const SignUpPage = () => <SignUp />;
+const SignUpPage = () => (
+  <>
+    <div className="flex flex-col space-y-2 text-center">
+      <h1 className="font-semibold text-2xl tracking-tight">{title}</h1>
+      <p className="text-muted-foreground text-sm">{description}</p>
+    </div>
+    <SignUp />
+    <p className="px-8 text-center text-muted-foreground text-sm">
+      Already have an account?{" "}
+      <Link
+        className="underline underline-offset-4 hover:text-primary"
+        href="/sign-in"
+      >
+        Sign in
+      </Link>
+    </p>
+  </>
+);
 
 export default SignUpPage;

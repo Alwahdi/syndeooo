@@ -2,7 +2,7 @@
 
 import { signIn } from "../client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -10,6 +10,8 @@ export const SignIn = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") ?? "/";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +27,7 @@ export const SignIn = () => {
       if (result.error) {
         setError(result.error.message ?? "Sign in failed");
       } else {
-        router.push("/");
+        router.push(callbackUrl);
         router.refresh();
       }
     } catch {
@@ -36,7 +38,7 @@ export const SignIn = () => {
   };
 
   const handleSocialSignIn = async (provider: "google" | "github") => {
-    await signIn.social({ provider, callbackURL: "/" });
+    await signIn.social({ provider, callbackURL: callbackUrl });
   };
 
   return (

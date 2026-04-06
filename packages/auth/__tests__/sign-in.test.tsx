@@ -5,6 +5,7 @@ import userEvent from "@testing-library/user-event";
 // Mock next/navigation
 const mockPush = vi.fn();
 const mockRefresh = vi.fn();
+const mockSearchParamsGet = vi.fn();
 vi.mock("next/navigation", () => ({
   useRouter: () => ({
     push: mockPush,
@@ -13,6 +14,9 @@ vi.mock("next/navigation", () => ({
     forward: vi.fn(),
     replace: vi.fn(),
     prefetch: vi.fn(),
+  }),
+  useSearchParams: () => ({
+    get: mockSearchParamsGet,
   }),
 }));
 
@@ -34,6 +38,7 @@ describe("SignIn component", () => {
     mockRefresh.mockClear();
     mockSignInEmail.mockClear();
     mockSignInSocial.mockClear();
+    mockSearchParamsGet.mockReturnValue(null);
   });
 
   it("renders the sign-in form with email and password fields", () => {
@@ -214,6 +219,49 @@ describe("SignIn component", () => {
 
     await waitFor(() => {
       expect(screen.getByText("Sign in failed")).toBeInTheDocument();
+    });
+  });
+
+  it("uses callbackUrl from search params after successful sign-in", async () => {
+    mockSearchParamsGet.mockReturnValue("/dashboard");
+    mockSignInEmail.mockResolvedValue({ data: { user: { id: "1" } } });
+    const user = userEvent.setup();
+    render(<SignIn />);
+
+    await user.type(screen.getByLabelText("Email"), "test@example.com");
+    await user.type(screen.getByLabelText("Password"), "password123");
+    await user.click(screen.getByRole("button", { name: "Sign in" }));
+
+    await waitFor(() => {
+      expect(mockPush).toHaveBeenCalledWith("/dashboard");
+    });
+  });
+
+  it("passes callbackUrl to social sign-in", async () => {
+    mockSearchParamsGet.mockReturnValue("/settings");
+    const user = userEvent.setup();
+    render(<SignIn />);
+
+    await user.click(screen.getByRole("button", { name: "GitHub" }));
+
+    expect(mockSignInSocial).toHaveBeenCalledWith({
+      provider: "github",
+      callbackURL: "/settings",
+    });
+  });
+
+  it("defaults to / when no callbackUrl", async () => {
+    mockSearchParamsGet.mockReturnValue(null);
+    mockSignInEmail.mockResolvedValue({ data: { user: { id: "1" } } });
+    const user = userEvent.setup();
+    render(<SignIn />);
+
+    await user.type(screen.getByLabelText("Email"), "test@example.com");
+    await user.type(screen.getByLabelText("Password"), "password123");
+    await user.click(screen.getByRole("button", { name: "Sign in" }));
+
+    await waitFor(() => {
+      expect(mockPush).toHaveBeenCalledWith("/");
     });
   });
 });
