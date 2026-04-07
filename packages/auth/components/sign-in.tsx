@@ -1,8 +1,8 @@
 "use client";
 
-import { signIn } from "../client";
-import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { signIn } from "../client";
 
 export const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -56,7 +56,7 @@ export const SignIn = () => {
       <form onSubmit={handleSubmit}>
         <div className="grid gap-4">
           <div className="grid gap-2">
-            <label className="text-sm font-medium" htmlFor="email">
+            <label className="font-medium text-sm" htmlFor="email">
               Email
             </label>
             <input
@@ -71,7 +71,7 @@ export const SignIn = () => {
             />
           </div>
           <div className="grid gap-2">
-            <label className="text-sm font-medium" htmlFor="password">
+            <label className="font-medium text-sm" htmlFor="password">
               Password
             </label>
             <input
@@ -85,11 +85,9 @@ export const SignIn = () => {
               value={password}
             />
           </div>
-          {error && (
-            <p className="text-sm text-destructive">{error}</p>
-          )}
+          {error && <p className="text-destructive text-sm">{error}</p>}
           <button
-            className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+            className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground text-sm ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
             disabled={loading}
             type="submit"
           >
@@ -109,7 +107,7 @@ export const SignIn = () => {
       </div>
       <div className="grid grid-cols-2 gap-4">
         <button
-          className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+          className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-4 py-2 font-medium text-sm ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
           disabled={socialLoading}
           onClick={() => handleSocialSignIn("github")}
           type="button"
@@ -117,7 +115,7 @@ export const SignIn = () => {
           {socialLoading ? "Loading..." : "GitHub"}
         </button>
         <button
-          className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+          className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-4 py-2 font-medium text-sm ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
           disabled={socialLoading}
           onClick={() => handleSocialSignIn("google")}
           type="button"

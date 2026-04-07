@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock next/navigation
 const mockPush = vi.fn();
@@ -33,12 +33,13 @@ describe("SignUp component", () => {
     mockSignUpEmail.mockClear();
   });
 
-  it("renders the sign-up form with name, email, and password fields", () => {
+  it("renders the sign-up form with name, email, password, and confirm password fields", () => {
     render(<SignUp />);
 
     expect(screen.getByLabelText("Name")).toBeInTheDocument();
     expect(screen.getByLabelText("Email")).toBeInTheDocument();
     expect(screen.getByLabelText("Password")).toBeInTheDocument();
+    expect(screen.getByLabelText("Confirm Password")).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: "Create account" })
     ).toBeInTheDocument();
@@ -51,10 +52,12 @@ describe("SignUp component", () => {
     await user.type(screen.getByLabelText("Name"), "John Doe");
     await user.type(screen.getByLabelText("Email"), "john@example.com");
     await user.type(screen.getByLabelText("Password"), "securepass");
+    await user.type(screen.getByLabelText("Confirm Password"), "securepass");
 
     expect(screen.getByLabelText("Name")).toHaveValue("John Doe");
     expect(screen.getByLabelText("Email")).toHaveValue("john@example.com");
     expect(screen.getByLabelText("Password")).toHaveValue("securepass");
+    expect(screen.getByLabelText("Confirm Password")).toHaveValue("securepass");
   });
 
   it("calls signUp.email on form submit and redirects on success", async () => {
@@ -65,6 +68,7 @@ describe("SignUp component", () => {
     await user.type(screen.getByLabelText("Name"), "John Doe");
     await user.type(screen.getByLabelText("Email"), "john@example.com");
     await user.type(screen.getByLabelText("Password"), "securepass");
+    await user.type(screen.getByLabelText("Confirm Password"), "securepass");
     await user.click(screen.getByRole("button", { name: "Create account" }));
 
     await waitFor(() => {
@@ -91,6 +95,7 @@ describe("SignUp component", () => {
     await user.type(screen.getByLabelText("Name"), "John");
     await user.type(screen.getByLabelText("Email"), "john@example.com");
     await user.type(screen.getByLabelText("Password"), "password123");
+    await user.type(screen.getByLabelText("Confirm Password"), "password123");
     await user.click(screen.getByRole("button", { name: "Create account" }));
 
     await waitFor(() => {
@@ -108,6 +113,7 @@ describe("SignUp component", () => {
     await user.type(screen.getByLabelText("Name"), "John");
     await user.type(screen.getByLabelText("Email"), "john@example.com");
     await user.type(screen.getByLabelText("Password"), "password123");
+    await user.type(screen.getByLabelText("Confirm Password"), "password123");
     await user.click(screen.getByRole("button", { name: "Create account" }));
 
     await waitFor(() => {
@@ -130,7 +136,8 @@ describe("SignUp component", () => {
 
     await user.type(screen.getByLabelText("Name"), "John");
     await user.type(screen.getByLabelText("Email"), "john@example.com");
-    await user.type(screen.getByLabelText("Password"), "password");
+    await user.type(screen.getByLabelText("Password"), "password1");
+    await user.type(screen.getByLabelText("Confirm Password"), "password1");
     await user.click(screen.getByRole("button", { name: "Create account" }));
 
     await waitFor(() => {
@@ -149,6 +156,7 @@ describe("SignUp component", () => {
     expect(screen.getByLabelText("Name")).toBeRequired();
     expect(screen.getByLabelText("Email")).toBeRequired();
     expect(screen.getByLabelText("Password")).toBeRequired();
+    expect(screen.getByLabelText("Confirm Password")).toBeRequired();
   });
 
   it("uses correct input types", () => {
@@ -172,6 +180,7 @@ describe("SignUp component", () => {
     await user.type(screen.getByLabelText("Name"), "John");
     await user.type(screen.getByLabelText("Email"), "john@example.com");
     await user.type(screen.getByLabelText("Password"), "password123");
+    await user.type(screen.getByLabelText("Confirm Password"), "password123");
     await user.click(screen.getByRole("button", { name: "Create account" }));
 
     await waitFor(() => {
@@ -183,11 +192,12 @@ describe("SignUp component", () => {
     render(<SignUp />);
 
     expect(screen.getByPlaceholderText("Your name")).toBeInTheDocument();
-    expect(
-      screen.getByPlaceholderText("name@example.com")
-    ).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("name@example.com")).toBeInTheDocument();
     expect(
       screen.getByPlaceholderText("Create a password")
+    ).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText("Confirm your password")
     ).toBeInTheDocument();
   });
 
@@ -198,6 +208,7 @@ describe("SignUp component", () => {
     await user.type(screen.getByLabelText("Name"), "Test User");
     await user.type(screen.getByLabelText("Email"), "test@example.com");
     await user.type(screen.getByLabelText("Password"), "short");
+    await user.type(screen.getByLabelText("Confirm Password"), "short");
     await user.click(screen.getByRole("button", { name: "Create account" }));
 
     await waitFor(() => {
@@ -218,6 +229,7 @@ describe("SignUp component", () => {
     await user.type(screen.getByLabelText("Name"), "Test User");
     await user.type(screen.getByLabelText("Email"), "test@example.com");
     await user.type(screen.getByLabelText("Password"), "12345678");
+    await user.type(screen.getByLabelText("Confirm Password"), "12345678");
     await user.click(screen.getByRole("button", { name: "Create account" }));
 
     await waitFor(() => {

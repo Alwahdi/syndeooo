@@ -1,8 +1,8 @@
 "use client";
 
-import { signUp } from "../client";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { signUp } from "../client";
 
 export const SignUp = () => {
   const [name, setName] = useState("");
@@ -54,7 +54,7 @@ export const SignUp = () => {
       <form onSubmit={handleSubmit}>
         <div className="grid gap-4">
           <div className="grid gap-2">
-            <label className="text-sm font-medium" htmlFor="name">
+            <label className="font-medium text-sm" htmlFor="name">
               Name
             </label>
             <input
@@ -69,7 +69,7 @@ export const SignUp = () => {
             />
           </div>
           <div className="grid gap-2">
-            <label className="text-sm font-medium" htmlFor="email">
+            <label className="font-medium text-sm" htmlFor="email">
               Email
             </label>
             <input
@@ -85,7 +85,7 @@ export const SignUp = () => {
             />
           </div>
           <div className="grid gap-2">
-            <label className="text-sm font-medium" htmlFor="password">
+            <label className="font-medium text-sm" htmlFor="password">
               Password
             </label>
             <input
@@ -119,11 +119,9 @@ export const SignUp = () => {
               value={confirmPassword}
             />
           </div>
-          {error && (
-            <p className="text-sm text-destructive">{error}</p>
-          )}
+          {error && <p className="text-destructive text-sm">{error}</p>}
           <button
-            className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+            className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground text-sm ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
             disabled={loading}
             type="submit"
           >

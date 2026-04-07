@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock next/navigation
 const mockPush = vi.fn();
@@ -46,20 +46,14 @@ describe("SignIn component", () => {
 
     expect(screen.getByLabelText("Email")).toBeInTheDocument();
     expect(screen.getByLabelText("Password")).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: "Sign in" })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Sign in" })).toBeInTheDocument();
   });
 
   it("renders social sign-in buttons", () => {
     render(<SignIn />);
 
-    expect(
-      screen.getByRole("button", { name: "GitHub" })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: "Google" })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "GitHub" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Google" })).toBeInTheDocument();
   });
 
   it("renders 'Or continue with' separator", () => {

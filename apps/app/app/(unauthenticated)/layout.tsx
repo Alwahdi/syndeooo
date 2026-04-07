@@ -20,7 +20,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => (
       <div className="relative z-20 mt-auto text-primary">
         <blockquote className="space-y-2">
           <p className="text-lg">
-            &ldquo;SyndeoCare has transformed how we manage patient care 
+            &ldquo;SyndeoCare has transformed how we manage patient care
             coordination, making our workflows seamless and efficient.&rdquo;
           </p>
           <footer className="text-sm">Healthcare Professional</footer>

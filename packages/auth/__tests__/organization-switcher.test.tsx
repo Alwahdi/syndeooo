@@ -1,6 +1,21 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+// Mock next/navigation
+const mockRouterRefresh = vi.fn();
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    replace: vi.fn(),
+    refresh: mockRouterRefresh,
+    back: vi.fn(),
+    forward: vi.fn(),
+    prefetch: vi.fn(),
+  }),
+  usePathname: () => "/",
+  useSearchParams: () => new URLSearchParams(),
+}));
 
 // Mock the auth client
 const mockOrgList = vi.fn();
@@ -122,7 +137,9 @@ describe("OrganizationSwitcher component", () => {
     expect(screen.queryByText("Acme")).not.toBeInTheDocument();
 
     // Click to open
-    await user.click(screen.getByRole("button", { name: /Select organization/i }));
+    await user.click(
+      screen.getByRole("button", { name: /Select organization/i })
+    );
 
     await waitFor(() => {
       expect(screen.getByText("Acme")).toBeInTheDocument();
@@ -150,10 +167,8 @@ describe("OrganizationSwitcher component", () => {
       expect(screen.getByText("Acme")).toBeInTheDocument();
     });
 
-    // Open dropdown  
-    await user.click(
-      screen.getByRole("button", { name: /Acme/i })
-    );
+    // Open dropdown
+    await user.click(screen.getByRole("button", { name: /Acme/i }));
 
     // Wait for dropdown to appear, then click Beta
     await waitFor(() => {
@@ -172,7 +187,7 @@ describe("OrganizationSwitcher component", () => {
       });
     });
 
-    expect(mockReload).toHaveBeenCalled();
+    expect(mockRouterRefresh).toHaveBeenCalled();
   });
 
   it("shows first letter initial when no logo", async () => {

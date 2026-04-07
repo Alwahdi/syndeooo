@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock next/server before importing the module under test
 const mockRedirect = vi.fn();
@@ -6,7 +6,7 @@ const mockNext = vi.fn(() => new Response("next"));
 
 vi.mock("next/server", () => {
   class MockNextRequest {
-    nextUrl: { pathname: string };
+    nextUrl: { pathname: string; search: string };
     url: string;
     cookies: {
       get: (name: string) => { value: string } | undefined;
@@ -14,7 +14,7 @@ vi.mock("next/server", () => {
 
     constructor(url: string, options?: { cookies?: Record<string, string> }) {
       const parsed = new URL(url);
-      this.nextUrl = { pathname: parsed.pathname };
+      this.nextUrl = { pathname: parsed.pathname, search: parsed.search };
       this.url = url;
       const cookieStore = options?.cookies ?? {};
       this.cookies = {
@@ -52,7 +52,7 @@ function createRequest(
   const url = `http://localhost:3000${path}`;
   const parsed = new URL(url);
   return {
-    nextUrl: { pathname: parsed.pathname },
+    nextUrl: { pathname: parsed.pathname, search: parsed.search },
     url,
     cookies: {
       get: (name: string) => {
@@ -194,7 +194,9 @@ describe("authMiddleware", () => {
       const request = createRequest("/dashboard");
       // Override to return an object with empty value
       request.cookies.get = (name: string) => {
-        if (name === "better-auth.session_token") return { value: "" };
+        if (name === "better-auth.session_token") {
+          return { value: "" };
+        }
         return undefined;
       };
 

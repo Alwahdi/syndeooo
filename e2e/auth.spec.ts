@@ -1,4 +1,4 @@
-import { test as base, expect, type Page } from "@playwright/test";
+import { test as base, expect } from "@playwright/test";
 
 // Unique suffix per test run to avoid collisions
 const uid = Date.now().toString(36);
@@ -20,7 +20,9 @@ base.describe("Unauthenticated pages", () => {
   base("sign-in page loads correctly", async ({ page }) => {
     await page.goto("/sign-in");
     await expect(page).toHaveTitle(/Welcome back/i);
-    await expect(page.getByRole("heading", { name: /welcome back/i })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /welcome back/i })
+    ).toBeVisible();
     await expect(page.getByLabel("Email")).toBeVisible();
     await expect(page.getByLabel("Password")).toBeVisible();
     await expect(page.getByRole("button", { name: /sign in/i })).toBeVisible();
@@ -29,11 +31,15 @@ base.describe("Unauthenticated pages", () => {
   base("sign-up page loads correctly", async ({ page }) => {
     await page.goto("/sign-up");
     await expect(page).toHaveTitle(/Create an account/i);
-    await expect(page.getByRole("heading", { name: /create an account/i })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /create an account/i })
+    ).toBeVisible();
     await expect(page.getByLabel("Name")).toBeVisible();
     await expect(page.getByLabel("Email")).toBeVisible();
     await expect(page.getByLabel("Password")).toBeVisible();
-    await expect(page.getByRole("button", { name: /create account/i })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: /create account/i })
+    ).toBeVisible();
   });
 
   base("sign-in page has link to sign-up", async ({ page }) => {
@@ -63,12 +69,15 @@ base.describe("Unauthenticated pages", () => {
     await expect(page.getByText(/or continue with/i)).toBeVisible();
   });
 
-  base("sign-in page shows SyndeoCare branding on desktop", async ({ page }) => {
-    // This is only visible on lg screens (the left panel)
-    await page.setViewportSize({ width: 1280, height: 720 });
-    await page.goto("/sign-in");
-    await expect(page.getByText("SyndeoCare")).toBeVisible();
-  });
+  base(
+    "sign-in page shows SyndeoCare branding on desktop",
+    async ({ page }) => {
+      // This is only visible on lg screens (the left panel)
+      await page.setViewportSize({ width: 1280, height: 720 });
+      await page.goto("/sign-in");
+      await expect(page.getByText("SyndeoCare")).toBeVisible();
+    }
+  );
 });
 
 // ────────────────────────────────────────────────────────────────────
@@ -76,11 +85,14 @@ base.describe("Unauthenticated pages", () => {
 // ────────────────────────────────────────────────────────────────────
 
 base.describe("Protected route redirects", () => {
-  base("redirects unauthenticated user from / to /sign-in", async ({ page }) => {
-    await page.goto("/");
-    await page.waitForURL(/\/sign-in/);
-    await expect(page).toHaveURL(/\/sign-in/);
-  });
+  base(
+    "redirects unauthenticated user from / to /sign-in",
+    async ({ page }) => {
+      await page.goto("/");
+      await page.waitForURL(/\/sign-in/);
+      await expect(page).toHaveURL(/\/sign-in/);
+    }
+  );
 
   base("redirect includes callbackUrl parameter", async ({ page }) => {
     await page.goto("/some-protected-page");
@@ -101,22 +113,27 @@ base.describe("Sign-up flow", () => {
     await page.getByLabel("Password").fill("short");
     await page.getByRole("button", { name: /create account/i }).click();
 
-    await expect(page.getByText(/password must be at least 8 characters/i)).toBeVisible();
+    await expect(
+      page.getByText(/password must be at least 8 characters/i)
+    ).toBeVisible();
   });
 
-  base("successfully creates account and redirects to home", async ({ page }) => {
-    const email = testEmail("signup");
-    await page.goto("/sign-up");
+  base(
+    "successfully creates account and redirects to home",
+    async ({ page }) => {
+      const email = testEmail("signup");
+      await page.goto("/sign-up");
 
-    await page.getByLabel("Name").fill("E2E Test User");
-    await page.getByLabel("Email").fill(email);
-    await page.getByLabel("Password").fill(TEST_PASSWORD);
-    await page.getByRole("button", { name: /create account/i }).click();
+      await page.getByLabel("Name").fill("E2E Test User");
+      await page.getByLabel("Email").fill(email);
+      await page.getByLabel("Password").fill(TEST_PASSWORD);
+      await page.getByRole("button", { name: /create account/i }).click();
 
-    // Should redirect to home after sign-up
-    await page.waitForURL("/", { timeout: 15_000 });
-    await expect(page).toHaveURL("/");
-  });
+      // Should redirect to home after sign-up
+      await page.waitForURL("/", { timeout: 15_000 });
+      await expect(page).toHaveURL("/");
+    }
+  );
 
   base("rejects duplicate email sign-up", async ({ page }) => {
     // First, create the user
@@ -139,9 +156,9 @@ base.describe("Sign-up flow", () => {
     await page.getByRole("button", { name: /create account/i }).click();
 
     // Should show error (better-auth returns "User already exists" or similar)
-    await expect(
-      page.locator(".text-destructive").first()
-    ).toBeVisible({ timeout: 10_000 });
+    await expect(page.locator(".text-destructive").first()).toBeVisible({
+      timeout: 10_000,
+    });
   });
 
   base("shows loading state during sign-up", async ({ page }) => {
@@ -194,9 +211,9 @@ base.describe("Sign-in flow", () => {
     await page.getByLabel("Password").fill("WrongPassword!");
     await page.getByRole("button", { name: /sign in/i }).click();
 
-    await expect(
-      page.locator(".text-destructive").first()
-    ).toBeVisible({ timeout: 10_000 });
+    await expect(page.locator(".text-destructive").first()).toBeVisible({
+      timeout: 10_000,
+    });
   });
 
   base("shows error for non-existent user", async ({ page }) => {
@@ -205,9 +222,9 @@ base.describe("Sign-in flow", () => {
     await page.getByLabel("Password").fill(TEST_PASSWORD);
     await page.getByRole("button", { name: /sign in/i }).click();
 
-    await expect(
-      page.locator(".text-destructive").first()
-    ).toBeVisible({ timeout: 10_000 });
+    await expect(page.locator(".text-destructive").first()).toBeVisible({
+      timeout: 10_000,
+    });
   });
 
   base("shows loading state during sign-in", async ({ page }) => {
@@ -263,7 +280,7 @@ base.describe("Authenticated session", () => {
   base("session persists across page navigations", async ({ page }) => {
     await page.goto("/");
     await expect(page).toHaveURL("/");
-    
+
     // Navigate to another page and back
     await page.goto("/");
     await expect(page).toHaveURL("/");
@@ -274,7 +291,9 @@ base.describe("Authenticated session", () => {
     await expect(page).toHaveURL("/");
 
     // Find and click the sign out button (UserButton has sr-only "Sign out" text)
-    const signOutBtn = page.getByRole("button").filter({ hasText: /sign out/i });
+    const signOutBtn = page
+      .getByRole("button")
+      .filter({ hasText: /sign out/i });
     if (await signOutBtn.isVisible()) {
       await signOutBtn.click();
       await page.waitForURL(/\/sign-in/);
@@ -293,19 +312,22 @@ base.describe("Auth API routes", () => {
     expect(response.status()).toBe(200);
   });
 
-  base("POST /api/auth/sign-up/email creates user via API", async ({ request }) => {
-    const response = await request.post("/api/auth/sign-up/email", {
-      data: {
-        name: "API Test User",
-        email: testEmail("api-signup"),
-        password: TEST_PASSWORD,
-      },
-    });
-    expect(response.status()).toBe(200);
-    const body = await response.json();
-    expect(body.user).toBeDefined();
-    expect(body.user.email).toBe(testEmail("api-signup"));
-  });
+  base(
+    "POST /api/auth/sign-up/email creates user via API",
+    async ({ request }) => {
+      const response = await request.post("/api/auth/sign-up/email", {
+        data: {
+          name: "API Test User",
+          email: testEmail("api-signup"),
+          password: TEST_PASSWORD,
+        },
+      });
+      expect(response.status()).toBe(200);
+      const body = await response.json();
+      expect(body.user).toBeDefined();
+      expect(body.user.email).toBe(testEmail("api-signup"));
+    }
+  );
 
   base("POST /api/auth/sign-in/email signs in via API", async ({ request }) => {
     // Create user first
@@ -324,43 +346,52 @@ base.describe("Auth API routes", () => {
     expect(body.session).toBeDefined();
   });
 
-  base("POST /api/auth/sign-in/email rejects wrong password", async ({ request }) => {
-    const email = testEmail("api-wrong-pwd");
-    await request.post("/api/auth/sign-up/email", {
-      data: { name: "Wrong Pwd", email, password: TEST_PASSWORD },
-    });
+  base(
+    "POST /api/auth/sign-in/email rejects wrong password",
+    async ({ request }) => {
+      const email = testEmail("api-wrong-pwd");
+      await request.post("/api/auth/sign-up/email", {
+        data: { name: "Wrong Pwd", email, password: TEST_PASSWORD },
+      });
 
-    const response = await request.post("/api/auth/sign-in/email", {
-      data: { email, password: "WrongPassword!" },
-    });
-    // Better Auth returns 401 or error in body
-    const body = await response.json();
-    expect(body.error || response.status() !== 200).toBeTruthy();
-  });
+      const response = await request.post("/api/auth/sign-in/email", {
+        data: { email, password: "WrongPassword!" },
+      });
+      // Better Auth returns 401 or error in body
+      const body = await response.json();
+      expect(body.error || response.status() !== 200).toBeTruthy();
+    }
+  );
 
-  base("GET /api/auth/get-session returns null when not authenticated", async ({ request }) => {
-    const response = await request.get("/api/auth/get-session");
-    expect(response.status()).toBe(200);
-    const body = await response.json();
-    expect(body.session).toBeNull();
-  });
+  base(
+    "GET /api/auth/get-session returns null when not authenticated",
+    async ({ request }) => {
+      const response = await request.get("/api/auth/get-session");
+      expect(response.status()).toBe(200);
+      const body = await response.json();
+      expect(body.session).toBeNull();
+    }
+  );
 
-  base("GET /api/auth/get-session returns session with valid cookie", async ({ request }) => {
-    // Sign up to get a session cookie
-    const email = testEmail("api-session");
-    const signUpRes = await request.post("/api/auth/sign-up/email", {
-      data: { name: "Session Test", email, password: TEST_PASSWORD },
-    });
-    expect(signUpRes.status()).toBe(200);
+  base(
+    "GET /api/auth/get-session returns session with valid cookie",
+    async ({ request }) => {
+      // Sign up to get a session cookie
+      const email = testEmail("api-session");
+      const signUpRes = await request.post("/api/auth/sign-up/email", {
+        data: { name: "Session Test", email, password: TEST_PASSWORD },
+      });
+      expect(signUpRes.status()).toBe(200);
 
-    // The sign-up response should set cookies — subsequent requests use them
-    const sessionRes = await request.get("/api/auth/get-session");
-    expect(sessionRes.status()).toBe(200);
-    const body = await sessionRes.json();
-    expect(body.session).toBeDefined();
-    expect(body.user).toBeDefined();
-    expect(body.user.email).toBe(email);
-  });
+      // The sign-up response should set cookies — subsequent requests use them
+      const sessionRes = await request.get("/api/auth/get-session");
+      expect(sessionRes.status()).toBe(200);
+      const body = await sessionRes.json();
+      expect(body.session).toBeDefined();
+      expect(body.user).toBeDefined();
+      expect(body.user.email).toBe(email);
+    }
+  );
 });
 
 // ────────────────────────────────────────────────────────────────────
@@ -386,15 +417,15 @@ base.describe("Input validation & edge cases", () => {
     await page.goto("/sign-up");
 
     // All fields should be required
-    const nameValid = await page.getByLabel("Name").evaluate(
-      (el: HTMLInputElement) => el.required
-    );
-    const emailValid = await page.getByLabel("Email").evaluate(
-      (el: HTMLInputElement) => el.required
-    );
-    const passwordValid = await page.getByLabel("Password").evaluate(
-      (el: HTMLInputElement) => el.required
-    );
+    const nameValid = await page
+      .getByLabel("Name")
+      .evaluate((el: HTMLInputElement) => el.required);
+    const emailValid = await page
+      .getByLabel("Email")
+      .evaluate((el: HTMLInputElement) => el.required);
+    const passwordValid = await page
+      .getByLabel("Password")
+      .evaluate((el: HTMLInputElement) => el.required);
 
     expect(nameValid).toBe(true);
     expect(emailValid).toBe(true);

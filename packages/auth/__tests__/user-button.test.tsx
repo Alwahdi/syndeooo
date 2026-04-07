@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock next/navigation
 const mockPush = vi.fn();
@@ -195,7 +195,11 @@ describe("UserButton component", () => {
     const user = userEvent.setup();
     render(<UserButton />);
 
-    await user.click(screen.getByRole("button"));
+    // First click opens the dropdown
+    await user.click(screen.getByRole("button", { name: /User menu/ }));
+
+    // Now click "Sign out" in the dropdown
+    await user.click(screen.getByRole("menuitem", { name: "Sign out" }));
 
     await waitFor(() => {
       expect(mockSignOut).toHaveBeenCalled();
@@ -215,8 +219,10 @@ describe("UserButton component", () => {
       },
     });
 
-    render(<UserButton />);
+    const user2 = userEvent.setup();
+    const { container } = render(<UserButton />);
 
-    expect(screen.getByText("Sign out")).toBeInTheDocument();
+    // The sr-only "User menu" text should be present
+    expect(screen.getByText("User menu")).toBeInTheDocument();
   });
 });
