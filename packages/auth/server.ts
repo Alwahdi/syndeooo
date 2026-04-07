@@ -11,12 +11,17 @@ export type { Session, User } from "./auth";
  * Returns the session and user, or null values if not authenticated.
  */
 export const getSession = async () => {
-  const requestHeaders = await headers();
-  const session = await auth.api.getSession({
-    headers: requestHeaders,
-  });
+  try {
+    const requestHeaders = await headers();
+    const session = await auth.api.getSession({
+      headers: requestHeaders,
+    });
 
-  return session;
+    return session;
+  } catch (error) {
+    console.error("Failed to get session:", error);
+    return null;
+  }
 };
 
 /**

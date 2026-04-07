@@ -9,6 +9,7 @@ export const SignIn = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [socialLoading, setSocialLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/";
@@ -38,7 +39,16 @@ export const SignIn = () => {
   };
 
   const handleSocialSignIn = async (provider: "google" | "github") => {
-    await signIn.social({ provider, callbackURL: callbackUrl });
+    setSocialLoading(true);
+    setError("");
+
+    try {
+      await signIn.social({ provider, callbackURL: callbackUrl });
+    } catch (error) {
+      console.error("Social sign-in failed:", error);
+      setError("Social sign-in failed. Please try again.");
+      setSocialLoading(false);
+    }
   };
 
   return (
@@ -100,17 +110,19 @@ export const SignIn = () => {
       <div className="grid grid-cols-2 gap-4">
         <button
           className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+          disabled={socialLoading}
           onClick={() => handleSocialSignIn("github")}
           type="button"
         >
-          GitHub
+          {socialLoading ? "Loading..." : "GitHub"}
         </button>
         <button
           className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+          disabled={socialLoading}
           onClick={() => handleSocialSignIn("google")}
           type="button"
         >
-          Google
+          {socialLoading ? "Loading..." : "Google"}
         </button>
       </div>
     </div>

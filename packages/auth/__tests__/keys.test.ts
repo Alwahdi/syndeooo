@@ -9,15 +9,16 @@ vi.mock("@t3-oss/env-nextjs", () => ({
 }));
 
 describe("keys - environment validation", () => {
-  const originalEnv = process.env;
+  let originalEnv: NodeJS.ProcessEnv;
 
   beforeEach(() => {
     vi.resetModules();
-    process.env = { ...originalEnv };
+    originalEnv = structuredClone(process.env);
+    process.env = structuredClone(originalEnv);
   });
 
   afterEach(() => {
-    process.env = originalEnv;
+    process.env = structuredClone(originalEnv);
   });
 
   it("accepts valid environment variables", async () => {

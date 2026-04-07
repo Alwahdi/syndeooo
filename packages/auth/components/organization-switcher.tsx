@@ -1,7 +1,8 @@
 "use client";
 
 import { organization, useSession } from "../client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 
 interface OrganizationSwitcherProps {
   afterSelectOrganizationUrl?: string;
@@ -16,21 +17,33 @@ interface Organization {
 }
 
 export const OrganizationSwitcher = ({
-  afterSelectOrganizationUrl: _afterSelectOrganizationUrl,
-  hidePersonal: _hidePersonal,
+  afterSelectOrganizationUrl,
+  hidePersonal,
 }: OrganizationSwitcherProps) => {
   const { data: session } = useSession();
   const [orgs, setOrgs] = useState<Organization[]>([]);
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
+    let mounted = true;
+
     const fetchOrgs = async () => {
-      const result = await organization.list();
-      if (result.data) {
-        setOrgs(result.data as unknown as Organization[]);
+      try {
+        const result = await organization.list();
+        if (result.data && mounted) {
+          setOrgs(result.data as unknown as Organization[]);
+        }
+      } catch (error) {
+        console.error("Failed to fetch organizations:", error);
       }
     };
+
     fetchOrgs();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const activeOrgId = session?.session?.activeOrganizationId;
@@ -39,8 +52,24 @@ export const OrganizationSwitcher = ({
   const handleSelectOrg = async (orgId: string) => {
     await organization.setActive({ organizationId: orgId });
     setOpen(false);
-    window.location.reload();
+
+    if (afterSelectOrganizationUrl) {
+      router.push(afterSelectOrganizationUrl);
+    } else {
+      router.refresh();
+    }
   };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Escape") {
+      setOpen(false);
+    }
+  };
+
+  // Filter out personal workspace if hidePersonal is true
+  const filteredOrgs = hidePersonal
+    ? orgs.filter((org) => org.slug !== null)
+    : orgs;
 
   return (
     <div className="relative">
@@ -48,6 +77,8 @@ export const OrganizationSwitcher = ({
         className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-accent"
         onClick={() => setOpen(!open)}
         type="button"
+        aria-haspopup="listbox"
+        aria-expanded={open}
       >
         {activeOrg?.logo ? (
           <img
@@ -64,14 +95,20 @@ export const OrganizationSwitcher = ({
           {activeOrg?.name ?? "Select organization"}
         </span>
       </button>
-      {open && orgs.length > 0 && (
-        <div className="absolute top-full left-0 z-50 mt-1 w-full rounded-md border bg-popover p-1 shadow-md">
-          {orgs.map((org) => (
+      {open && filteredOrgs.length > 0 && (
+        <div
+          className="absolute top-full left-0 z-50 mt-1 w-full rounded-md border bg-popover p-1 shadow-md"
+          role="listbox"
+          onKeyDown={handleKeyDown}
+        >
+          {filteredOrgs.map((org) => (
             <button
               className="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm hover:bg-accent"
               key={org.id}
               onClick={() => handleSelectOrg(org.id)}
               type="button"
+              role="option"
+              aria-selected={org.id === activeOrgId}
             >
               <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-muted text-xs">
                 {org.name[0]?.toUpperCase()}

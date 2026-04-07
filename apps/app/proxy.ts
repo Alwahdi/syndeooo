@@ -13,9 +13,8 @@ const securityHeaders = env.FLAGS_SECRET
 
 // Better Auth middleware checks for session cookie on protected routes
 // Security headers are applied in the callback
-export default authMiddleware((request: NextRequest) => {
-  const response = securityHeaders();
-  return response;
+export default authMiddleware(() => {
+  return securityHeaders();
 });
 
 export const config = {

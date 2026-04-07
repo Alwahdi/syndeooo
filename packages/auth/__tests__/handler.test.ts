@@ -25,10 +25,12 @@ describe("handler", () => {
 
   it("calls toNextJsHandler with auth instance", async () => {
     const { toNextJsHandler } = await import("better-auth/next-js");
+    const { auth } = await import("../auth");
 
     // handler.ts was already imported and evaluated above
     await import("../handler");
 
     expect(toNextJsHandler).toHaveBeenCalled();
+    expect(toNextJsHandler).toHaveBeenCalledWith(auth);
   });
 });

@@ -50,11 +50,19 @@ export const getUsers = async (
       },
     });
 
-    const data: Liveblocks["UserMeta"]["info"][] = members.map((member) => ({
-      name: member.user.name ?? "Unknown user",
-      picture: member.user.image ?? "",
-      color: colors[Math.floor(Math.random() * colors.length)],
-    }));
+    const data: Liveblocks["UserMeta"]["info"][] = members.map((member) => {
+      // Deterministic color based on user ID
+      const hash = member.user.id
+        .split("")
+        .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+      const colorIndex = hash % colors.length;
+
+      return {
+        name: member.user.name ?? "Unknown user",
+        picture: member.user.image ?? "",
+        color: colors[colorIndex],
+      };
+    });
 
     return { data };
   } catch (error) {

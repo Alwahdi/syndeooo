@@ -9,7 +9,7 @@ const publicPaths = [
 ];
 
 const isPublicPath = (pathname: string) =>
-  publicPaths.some((path) => pathname.startsWith(path));
+  publicPaths.some((path) => pathname === path || pathname.startsWith(path + "/"));
 
 /**
  * Auth middleware that checks for a session cookie.
@@ -38,7 +38,8 @@ export const authMiddleware = (
 
     if (!sessionCookie?.value) {
       const signInUrl = new URL("/sign-in", request.url);
-      signInUrl.searchParams.set("callbackUrl", pathname);
+      const callbackUrl = pathname + request.nextUrl.search;
+      signInUrl.searchParams.set("callbackUrl", callbackUrl);
       return NextResponse.redirect(signInUrl);
     }
 

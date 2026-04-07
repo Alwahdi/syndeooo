@@ -8,6 +8,7 @@ export const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -18,6 +19,11 @@ export const SignUp = () => {
 
     if (password.length < 8) {
       setError("Password must be at least 8 characters");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
       return;
     }
 
@@ -68,6 +74,7 @@ export const SignUp = () => {
             </label>
             <input
               className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              disabled={loading}
               id="email"
               name="email"
               onChange={(e) => setEmail(e.target.value)}
@@ -83,6 +90,7 @@ export const SignUp = () => {
             </label>
             <input
               className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              disabled={loading}
               id="password"
               name="password"
               onChange={(e) => setPassword(e.target.value)}
@@ -90,6 +98,25 @@ export const SignUp = () => {
               required
               type="password"
               value={password}
+            />
+            <p className="text-xs text-muted-foreground">
+              Must be at least 8 characters
+            </p>
+          </div>
+          <div className="grid gap-2">
+            <label className="text-sm font-medium" htmlFor="confirmPassword">
+              Confirm Password
+            </label>
+            <input
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              disabled={loading}
+              id="confirmPassword"
+              name="confirmPassword"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Confirm your password"
+              required
+              type="password"
+              value={confirmPassword}
             />
           </div>
           {error && (

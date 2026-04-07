@@ -14,23 +14,36 @@ vi.mock("../client", () => ({
   useSession: () => mockUseSession(),
 }));
 
-// Mock window.location.reload
-const mockReload = vi.fn();
-Object.defineProperty(window, "location", {
-  value: { reload: mockReload },
-  writable: true,
-});
-
 const { OrganizationSwitcher } = await import(
   "../components/organization-switcher"
 );
 
 describe("OrganizationSwitcher component", () => {
+  let mockReload: ReturnType<typeof vi.fn>;
+  let originalLocation: Location;
+
   beforeEach(() => {
     mockOrgList.mockReset();
     mockOrgSetActive.mockReset();
     mockUseSession.mockReset();
-    mockReload.mockClear();
+
+    // Mock window.location.reload
+    mockReload = vi.fn();
+    originalLocation = window.location;
+    Object.defineProperty(window, "location", {
+      value: { reload: mockReload },
+      writable: true,
+      configurable: true,
+    });
+  });
+
+  afterEach(() => {
+    // Restore original location
+    Object.defineProperty(window, "location", {
+      value: originalLocation,
+      writable: true,
+      configurable: true,
+    });
   });
 
   it("renders with default text when no active org", async () => {
@@ -150,6 +163,7 @@ describe("OrganizationSwitcher component", () => {
     // Get all buttons that match Beta (there might be the org initial too)
     const betaButtons = screen.getAllByText("Beta");
     const betaButton = betaButtons[0].closest("button");
+    expect(betaButton).not.toBeNull();
     await user.click(betaButton!);
 
     await waitFor(() => {
