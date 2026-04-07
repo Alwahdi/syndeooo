@@ -1,22 +1,7 @@
 "use server";
 
-import {
-  auth,
-  clerkClient,
-  type OrganizationMembership,
-} from "@repo/auth/server";
-
-const getName = (user: OrganizationMembership): string | undefined => {
-  let name = user.publicUserData?.firstName;
-
-  if (name && user.publicUserData?.lastName) {
-    name = `${name} ${user.publicUserData.lastName}`;
-  } else if (!name) {
-    name = user.publicUserData?.identifier;
-  }
-
-  return name;
-};
+import { getActiveOrganizationId } from "@repo/auth/server";
+import { database } from "@repo/database";
 
 const colors = [
   "var(--color-red-500)",
@@ -49,30 +34,35 @@ export const getUsers = async (
     }
 > => {
   try {
-    const { orgId } = await auth();
+    const orgId = await getActiveOrganizationId();
 
     if (!orgId) {
-      throw new Error("Not logged in");
+      throw new Error("No active organization selected");
     }
 
-    const clerk = await clerkClient();
-
-    const members = await clerk.organizations.getOrganizationMembershipList({
-      organizationId: orgId,
-      limit: 100,
+    const members = await database.member.findMany({
+      where: {
+        organizationId: orgId,
+        userId: { in: userIds },
+      },
+      include: {
+        user: true,
+      },
     });
 
-    const data: Liveblocks["UserMeta"]["info"][] = members.data
-      .filter(
-        (user) =>
-          user.publicUserData?.userId &&
-          userIds.includes(user.publicUserData.userId)
-      )
-      .map((user) => ({
-        name: getName(user) ?? "Unknown user",
-        picture: user.publicUserData?.imageUrl ?? "",
-        color: colors[Math.floor(Math.random() * colors.length)],
-      }));
+    const data: Liveblocks["UserMeta"]["info"][] = members.map((member) => {
+      // Deterministic color based on user ID
+      const hash = member.user.id
+        .split("")
+        .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+      const colorIndex = hash % colors.length;
+
+      return {
+        name: member.user.name ?? "Unknown user",
+        picture: member.user.image ?? "",
+        color: colors[colorIndex],
+      };
+    });
 
     return { data };
   } catch (error) {

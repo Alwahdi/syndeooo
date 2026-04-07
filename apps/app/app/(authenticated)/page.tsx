@@ -1,15 +1,14 @@
-import { auth } from "@repo/auth/server";
+import { getActiveOrganizationId } from "@repo/auth/server";
 import { database } from "@repo/database";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
-import { notFound } from "next/navigation";
 import { env } from "@/env";
 import { AvatarStack } from "./components/avatar-stack";
 import { Cursors } from "./components/cursors";
 import { Header } from "./components/header";
 
-const title = "Acme Inc";
-const description = "My application.";
+const title = "SyndeoCare";
+const description = "Healthcare coordination platform.";
 
 const CollaborationProvider = dynamic(() =>
   import("./components/collaboration-provider").then(
@@ -24,16 +23,12 @@ export const metadata: Metadata = {
 
 const App = async () => {
   const pages = await database.page.findMany();
-  const { orgId } = await auth();
-
-  if (!orgId) {
-    notFound();
-  }
+  const orgId = await getActiveOrganizationId();
 
   return (
     <>
       <Header page="Data Fetching" pages={["Building Your Application"]}>
-        {env.LIVEBLOCKS_SECRET && (
+        {env.LIVEBLOCKS_SECRET && orgId && (
           <CollaborationProvider orgId={orgId}>
             <AvatarStack />
             <Cursors />
