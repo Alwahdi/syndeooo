@@ -68,11 +68,12 @@ describe("Prisma Schema", () => {
   });
 
   describe("Relations & Indexes", () => {
-    it("Session has userId index", () => {
+    it("Session has userId index and unique token", () => {
       // Check for index on Session model
       const sessionBlock = schema.match(/model Session \{[\s\S]*?\n\}/)?.[0];
       expect(sessionBlock).toMatch(/@@index\(\[userId\]\)/);
-      expect(sessionBlock).toMatch(/@@index\(\[token\]\)/);
+      // token has @unique which creates an implicit index
+      expect(sessionBlock).toMatch(/token\s+String\s+@unique/);
     });
 
     it("Account has userId index", () => {

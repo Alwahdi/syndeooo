@@ -25,7 +25,7 @@ importers:
         specifier: 2.4.6
         version: 2.4.6
       '@playwright/test':
-        specifier: ^1.59.1
+        specifier: 1.59.1
         version: 1.59.1
       '@repo/typescript-config':
         specifier: workspace:*
@@ -40,7 +40,7 @@ importers:
         specifier: ^4.2.488
         version: 4.2.488(@radix-ui/react-popover@1.1.15(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.3))(react@19.2.3))(@types/node@25.3.5)(@types/react@19.2.14)(bufferutil@4.1.0)(react-dom@19.2.4(react@19.2.3))(ts-node@10.9.2(@types/node@25.3.5)(typescript@5.9.3))(typescript@5.9.3)(yaml@2.8.3)
       playwright:
-        specifier: ^1.59.1
+        specifier: 1.59.1
         version: 1.59.1
       tsup:
         specifier: ^8.5.1
@@ -728,7 +728,7 @@ importers:
         specifier: ^0.13.10
         version: 0.13.11(arktype@2.1.27)(typescript@5.9.3)(valibot@1.2.0(typescript@5.9.3))(zod@4.3.6)
       better-auth:
-        specifier: 1.5.6
+        specifier: ^1.5.6
         version: 1.5.6(@cloudflare/workers-types@4.20260405.1)(@opentelemetry/api@1.9.1)(@prisma/client@7.6.0(prisma@7.6.0(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(typescript@5.9.3))(mysql2@3.15.3)(next@16.2.2(@opentelemetry/api@1.9.1)(@playwright/test@1.59.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(prisma@7.6.0(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vitest@4.1.2(@opentelemetry/api@1.9.1)(@types/node@25.3.5)(jsdom@29.0.1(@noble/hashes@2.0.1))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.3.5)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.1)(yaml@2.8.3)))
       server-only:
         specifier: ^0.0.1
@@ -807,7 +807,7 @@ importers:
         specifier: ^1.7.0
         version: 1.7.0(react@19.2.4)
       next:
-        specifier: '>=14'
+        specifier: '>=15'
         version: 16.2.2(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(@playwright/test@1.59.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       next-themes:
         specifier: ^0.4.6

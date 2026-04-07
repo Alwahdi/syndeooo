@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock better-auth/next-js
 vi.mock("better-auth/next-js", () => ({
@@ -14,6 +14,11 @@ vi.mock("../auth", () => ({
 }));
 
 describe("handler", () => {
+  beforeEach(() => {
+    vi.resetModules();
+    vi.clearAllMocks();
+  });
+
   it("exports GET and POST handlers", async () => {
     const { GET, POST } = await import("../handler");
 
@@ -24,13 +29,11 @@ describe("handler", () => {
   });
 
   it("calls toNextJsHandler with auth instance", async () => {
+    await import("../handler");
     const { toNextJsHandler } = await import("better-auth/next-js");
     const { auth } = await import("../auth");
 
-    // handler.ts was already imported and evaluated above
-    await import("../handler");
-
-    expect(toNextJsHandler).toHaveBeenCalled();
+    expect(toNextJsHandler).toHaveBeenCalledTimes(1);
     expect(toNextJsHandler).toHaveBeenCalledWith(auth);
   });
 });

@@ -28,6 +28,7 @@ export const searchUsers = async (
       include: {
         user: true,
       },
+      take: 100,
     });
 
     const users = members.map((member) => ({

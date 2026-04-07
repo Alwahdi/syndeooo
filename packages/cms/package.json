@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "basehub dev",
-    "build": "echo 'Skipping basehub build (types already generated)' || basehub build",
+    "build": "basehub build",
     "analyze": "basehub",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"

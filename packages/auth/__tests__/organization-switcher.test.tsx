@@ -178,8 +178,11 @@ describe("OrganizationSwitcher component", () => {
     // Get all buttons that match Beta (there might be the org initial too)
     const betaButtons = screen.getAllByText("Beta");
     const betaButton = betaButtons[0].closest("button");
-    expect(betaButton).not.toBeNull();
-    await user.click(betaButton!);
+    expect(betaButton).toBeTruthy();
+    if (!betaButton) {
+      throw new Error("Beta button not found");
+    }
+    await user.click(betaButton);
 
     await waitFor(() => {
       expect(mockOrgSetActive).toHaveBeenCalledWith({

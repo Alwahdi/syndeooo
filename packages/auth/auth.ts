@@ -1,9 +1,9 @@
 import "server-only";
 
-import { betterAuth } from "better-auth";
-import { organization } from "better-auth/plugins";
-import { prismaAdapter } from "better-auth/adapters/prisma";
 import { database } from "@repo/database";
+import { betterAuth } from "better-auth";
+import { prismaAdapter } from "better-auth/adapters/prisma";
+import { organization } from "better-auth/plugins";
 import { keys } from "./keys";
 
 const env = keys();
@@ -52,6 +52,8 @@ export const auth = betterAuth({
 
   trustedOrigins: env.BETTER_AUTH_TRUSTED_ORIGINS
     ? env.BETTER_AUTH_TRUSTED_ORIGINS.split(",")
+        .map((o) => o.trim())
+        .filter(Boolean)
     : [],
 });
 

@@ -97,7 +97,9 @@ base.describe("Protected route redirects", () => {
   base("redirect includes callbackUrl parameter", async ({ page }) => {
     await page.goto("/some-protected-page");
     await page.waitForURL(/\/sign-in/);
-    await expect(page).toHaveURL(/callbackUrl/);
+    const url = new URL(page.url());
+    const callbackUrl = url.searchParams.get("callbackUrl");
+    expect(callbackUrl).toBe("/some-protected-page");
   });
 });
 
@@ -261,13 +263,25 @@ base.describe("Sign-in flow", () => {
 base.describe("Authenticated session", () => {
   const sessionEmail = testEmail("session");
 
-  // Set up: create user and store auth state
-  base.beforeEach(async ({ page }) => {
-    await page.goto("/sign-up");
+  // Create user once
+  base.beforeAll(async ({ browser }) => {
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    await page.goto("http://localhost:3000/sign-up");
     await page.getByLabel("Name").fill("Session Test");
     await page.getByLabel("Email").fill(sessionEmail);
     await page.getByLabel("Password").fill(TEST_PASSWORD);
     await page.getByRole("button", { name: /create account/i }).click();
+    await page.waitForURL("http://localhost:3000/", { timeout: 15_000 });
+    await context.close();
+  });
+
+  // Sign in before each test
+  base.beforeEach(async ({ page }) => {
+    await page.goto("/sign-in");
+    await page.getByLabel("Email").fill(sessionEmail);
+    await page.getByLabel("Password").fill(TEST_PASSWORD);
+    await page.getByRole("button", { name: /sign in/i }).click();
     await page.waitForURL("/", { timeout: 15_000 });
   });
 
@@ -290,15 +304,16 @@ base.describe("Authenticated session", () => {
     await page.goto("/");
     await expect(page).toHaveURL("/");
 
-    // Find and click the sign out button (UserButton has sr-only "Sign out" text)
-    const signOutBtn = page
-      .getByRole("button")
-      .filter({ hasText: /sign out/i });
-    if (await signOutBtn.isVisible()) {
-      await signOutBtn.click();
-      await page.waitForURL(/\/sign-in/);
-      await expect(page).toHaveURL(/\/sign-in/);
-    }
+    // Open user menu dropdown
+    const userMenuBtn = page.getByRole("button", { name: /user menu/i });
+    await userMenuBtn.click();
+
+    // Click sign out in the dropdown
+    const signOutBtn = page.getByRole("menuitem", { name: /sign out/i });
+    await signOutBtn.click();
+
+    await page.waitForURL(/\/sign-in/);
+    await expect(page).toHaveURL(/\/sign-in/);
   });
 });
 

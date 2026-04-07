@@ -12,7 +12,12 @@ export const SignIn = () => {
   const [socialLoading, setSocialLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") ?? "/";
+  const rawCallbackUrl = searchParams.get("callbackUrl") ?? "/";
+  // Only allow relative paths to prevent open redirect / javascript: injection
+  const callbackUrl =
+    rawCallbackUrl.startsWith("/") && !rawCallbackUrl.startsWith("//")
+      ? rawCallbackUrl
+      : "/";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,9 +48,17 @@ export const SignIn = () => {
     setError("");
 
     try {
-      await signIn.social({ provider, callbackURL: callbackUrl });
-    } catch (error) {
-      console.error("Social sign-in failed:", error);
+      const result = await signIn.social({
+        provider,
+        callbackURL: callbackUrl,
+      });
+      if (result?.error) {
+        setError(
+          result.error.message ?? "Social sign-in failed. Please try again."
+        );
+        setSocialLoading(false);
+      }
+    } catch {
       setError("Social sign-in failed. Please try again.");
       setSocialLoading(false);
     }
@@ -85,7 +98,11 @@ export const SignIn = () => {
               value={password}
             />
           </div>
-          {error && <p className="text-destructive text-sm">{error}</p>}
+          {error && (
+            <p className="text-destructive text-sm" role="alert">
+              {error}
+            </p>
+          )}
           <button
             className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground text-sm ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
             disabled={loading}

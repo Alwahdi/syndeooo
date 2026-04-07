@@ -1,7 +1,7 @@
 import { analytics } from "@repo/analytics/server";
 import { log } from "@repo/observability/log";
-import { NextResponse } from "next/server";
 import { createHmac, timingSafeEqual } from "crypto";
+import { NextResponse } from "next/server";
 
 /**
  * Auth webhook handler.
@@ -14,7 +14,6 @@ import { createHmac, timingSafeEqual } from "crypto";
  */
 
 interface AuthWebhookPayload {
-  event: string;
   data: {
     id?: string;
     email?: string;
@@ -24,6 +23,7 @@ interface AuthWebhookPayload {
     userId?: string;
     [key: string]: unknown;
   };
+  event: string;
 }
 
 export const POST = async (request: Request): Promise<Response> => {
@@ -33,10 +33,10 @@ export const POST = async (request: Request): Promise<Response> => {
     if (webhookSecret) {
       const signature = request.headers.get("x-webhook-signature");
       if (!signature) {
-        return new Response(
-          JSON.stringify({ error: "Missing signature" }),
-          { status: 401, headers: { "Content-Type": "application/json" } }
-        );
+        return new Response(JSON.stringify({ error: "Missing signature" }), {
+          status: 401,
+          headers: { "Content-Type": "application/json" },
+        });
       }
 
       const rawBody = await request.text();
@@ -51,10 +51,10 @@ export const POST = async (request: Request): Promise<Response> => {
         signatureBuffer.length !== expectedBuffer.length ||
         !timingSafeEqual(signatureBuffer, expectedBuffer)
       ) {
-        return new Response(
-          JSON.stringify({ error: "Invalid signature" }),
-          { status: 401, headers: { "Content-Type": "application/json" } }
-        );
+        return new Response(JSON.stringify({ error: "Invalid signature" }), {
+          status: 401,
+          headers: { "Content-Type": "application/json" },
+        });
       }
 
       // Parse the already-read body
@@ -90,7 +90,6 @@ export const POST = async (request: Request): Promise<Response> => {
                 email: data.email,
                 name: data.name,
                 avatar: data.image,
-                createdAt: new Date(),
               },
             });
             analytics?.capture({
@@ -136,10 +135,10 @@ export const POST = async (request: Request): Promise<Response> => {
       typeof payload.event !== "string" ||
       payload.data == null
     ) {
-      return new Response(
-        JSON.stringify({ error: "Invalid payload format" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
-      );
+      return new Response(JSON.stringify({ error: "Invalid payload format" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     const { event, data } = payload;

@@ -99,12 +99,12 @@ export const SignUp = () => {
               type="password"
               value={password}
             />
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               Must be at least 8 characters
             </p>
           </div>
           <div className="grid gap-2">
-            <label className="text-sm font-medium" htmlFor="confirmPassword">
+            <label className="font-medium text-sm" htmlFor="confirmPassword">
               Confirm Password
             </label>
             <input
@@ -119,7 +119,11 @@ export const SignUp = () => {
               value={confirmPassword}
             />
           </div>
-          {error && <p className="text-destructive text-sm">{error}</p>}
+          {error && (
+            <p className="text-destructive text-sm" role="alert">
+              {error}
+            </p>
+          )}
           <button
             className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground text-sm ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
             disabled={loading}

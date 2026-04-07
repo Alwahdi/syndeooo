@@ -37,7 +37,7 @@ export const getUsers = async (
     const orgId = await getActiveOrganizationId();
 
     if (!orgId) {
-      throw new Error("Not logged in");
+      throw new Error("No active organization selected");
     }
 
     const members = await database.member.findMany({
