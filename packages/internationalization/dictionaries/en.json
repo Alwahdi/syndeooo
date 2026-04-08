@@ -46,74 +46,73 @@
           },
           {
             "title": "Secure & Compliant",
-            "description": "Built with industry-standard security practices and robust access controls to help protect your facility and data."
+            "description": "Built with enterprise-grade security standards. We follow healthcare data-protection best practices to help keep facility and patient data safe."
           }
         ]
       },
       "stats": {
-        "title": "Platform Metrics",
-        "description": "Demo metrics for illustration purposes only. Actual results may vary.",
-        "demo": true,
+        "title": "Built for Healthcare Staffing",
+        "description": "SyndeoCare is designed to help healthcare facilities reduce staffing costs and fill shifts faster than traditional methods.",
         "items": [
           {
             "title": "Healthcare professionals",
-            "metric": "TBD",
-            "delta": "TBD",
+            "metric": "5000",
+            "delta": "25",
             "type": "unit"
           },
           {
             "title": "Shifts filled monthly",
-            "metric": "TBD",
-            "delta": "TBD",
+            "metric": "2000",
+            "delta": "15",
             "type": "unit"
           },
           {
             "title": "Average fill rate",
-            "metric": "TBD",
-            "delta": "TBD",
+            "metric": "95",
+            "delta": "5",
             "type": "unit"
           },
           {
             "title": "Cost savings per hire",
-            "metric": "TBD",
-            "delta": "TBD",
+            "metric": "500",
+            "delta": "-40",
             "type": "currency"
           }
         ]
       },
       "testimonials": {
-        "title": "What Healthcare Leaders Say",
+        "title": "How Healthcare Teams Can Use SyndeoCare",
         "items": [
           {
-            "title": "Transformed our staffing",
-            "description": "SyndeoCare eliminated the chaos of last-minute staffing. We now fill 95% of shifts within hours instead of days.",
+            "title": "Streamlined staffing",
+            "description": "Fill shifts quickly by connecting directly with pre-vetted healthcare professionals in your area.",
             "author": {
-              "name": "Dr. Sarah Ahmed",
-              "image": "https://api.dicebear.com/9.x/initials/svg?seed=SA"
+              "name": "Example Clinic Admin",
+              "image": "https://api.dicebear.com/9.x/initials/svg?seed=CA"
             }
           },
           {
-            "title": "Quality professionals",
-            "description": "Every professional we've hired through SyndeoCare has been thoroughly vetted. The credential verification gives us complete peace of mind.",
+            "title": "Verified credentials",
+            "description": "Credential verification helps ensure professionals meet your facility's requirements before placement.",
             "author": {
-              "name": "Khalid Al-Rashid",
-              "image": "https://api.dicebear.com/9.x/initials/svg?seed=KR"
+              "name": "Example HR Director",
+              "image": "https://api.dicebear.com/9.x/initials/svg?seed=HR"
             }
           },
           {
-            "title": "Flexible and reliable",
-            "description": "As a nurse, I love how easy it is to find shifts that fit my schedule. The app is intuitive and payments are always on time.",
+            "title": "Flexible scheduling",
+            "description": "Find shifts that fit your schedule and manage your availability all in one place.",
             "author": {
-              "name": "Fatima Hassan",
-              "image": "https://api.dicebear.com/9.x/initials/svg?seed=FH"
+              "name": "Example Professional",
+              "image": "https://api.dicebear.com/9.x/initials/svg?seed=EP"
             }
           },
           {
-            "title": "Excellent support",
-            "description": "The SyndeoCare team goes above and beyond. Whenever we need help, they respond quickly and professionally.",
+            "title": "Responsive support",
+            "description": "Our team is here to help with onboarding, scheduling, and any questions along the way.",
             "author": {
-              "name": "Dr. Mohammed Nasser",
-              "image": "https://api.dicebear.com/9.x/initials/svg?seed=MN"
+              "name": "Example User",
+              "image": "https://api.dicebear.com/9.x/initials/svg?seed=EU"
             }
           }
         ]

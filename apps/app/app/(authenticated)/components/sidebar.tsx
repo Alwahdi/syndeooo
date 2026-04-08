@@ -34,9 +34,10 @@ import type { ReactNode } from "react";
 
 interface GlobalSidebarProperties {
   readonly children: ReactNode;
+  readonly role: string;
 }
 
-const navItems = [
+const professionalNavItems = [
   {
     title: "Dashboard",
     url: "/",
@@ -64,6 +65,34 @@ const navItems = [
   },
 ];
 
+const clinicNavItems = [
+  {
+    title: "Dashboard",
+    url: "/",
+    icon: HomeIcon,
+  },
+  {
+    title: "Manage Shifts",
+    url: "/shifts",
+    icon: BriefcaseIcon,
+  },
+  {
+    title: "Bookings",
+    url: "/bookings",
+    icon: CalendarIcon,
+  },
+  {
+    title: "Messages",
+    url: "/messages",
+    icon: MessageSquareIcon,
+  },
+  {
+    title: "Profile",
+    url: "/profile",
+    icon: UserIcon,
+  },
+];
+
 const secondaryNav = [
   {
     title: "Settings",
@@ -72,16 +101,15 @@ const secondaryNav = [
   },
   {
     title: "Support",
-    url: "mailto:support@syndeocare.com",
+    url: "/settings",
     icon: LifeBuoyIcon,
   },
 ];
 
-export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
+export const GlobalSidebar = ({ children, role }: GlobalSidebarProperties) => {
   const pathname = usePathname();
 
-  // Use professional nav as default — role-specific rendering can be enhanced later
-  const mainNav = navItems;
+  const mainNav = role === "clinic" ? clinicNavItems : professionalNavItems;
 
   return (
     <>

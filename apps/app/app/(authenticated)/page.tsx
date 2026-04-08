@@ -1,3 +1,4 @@
+import { getUserRole } from "@repo/auth/roles";
 import { currentUser } from "@repo/auth/server";
 import { database } from "@repo/database";
 import {
@@ -25,12 +26,7 @@ const App = async () => {
     return null;
   }
 
-  // Fetch user's role
-  const userRole = await database.userRole.findFirst({
-    where: { userId: user.id },
-  });
-
-  const role = userRole?.role ?? "professional";
+  const role = (await getUserRole(user.id)) ?? "professional";
 
   // Fetch stats based on role
   const now = new Date();

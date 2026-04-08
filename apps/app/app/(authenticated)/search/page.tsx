@@ -5,23 +5,25 @@ import { Header } from "../components/header";
 
 interface SearchPageProperties {
   searchParams: Promise<{
-    q: string;
+    q?: string | string[];
   }>;
 }
 
 export const generateMetadata = async ({
   searchParams,
 }: SearchPageProperties) => {
-  const { q } = await searchParams;
+  const { q: rawQ } = await searchParams;
+  const q = Array.isArray(rawQ) ? rawQ[0] : rawQ;
 
   return {
-    title: `${q} - Search results`,
-    description: `Search results for ${q}`,
+    title: q ? `${q} - Search results` : "Search",
+    description: q ? `Search results for ${q}` : "Search",
   };
 };
 
 const SearchPage = async ({ searchParams }: SearchPageProperties) => {
-  const { q } = await searchParams;
+  const { q: rawQ } = await searchParams;
+  const q = Array.isArray(rawQ) ? rawQ[0] : rawQ;
 
   if (!q) {
     redirect("/");

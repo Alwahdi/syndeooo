@@ -1,3 +1,4 @@
+import { hasRole } from "@repo/auth/roles";
 import { currentUser } from "@repo/auth/server";
 import { database } from "@repo/database";
 import type { Metadata } from "next";
@@ -15,11 +16,7 @@ export default async function MessagesPage() {
     return null;
   }
 
-  const clinicRole = await database.userRole.findFirst({
-    where: { userId: user.id, role: "clinic" },
-  });
-
-  const isClinic = !!clinicRole;
+  const isClinic = await hasRole(user.id, "clinic");
 
   type ConversationResult = {
     id: string;
@@ -52,7 +49,6 @@ export default async function MessagesPage() {
             },
           },
           orderBy: { lastMessageAt: "desc" },
-          take: 50,
         })
       : [];
   } else {
@@ -73,7 +69,6 @@ export default async function MessagesPage() {
             },
           },
           orderBy: { lastMessageAt: "desc" },
-          take: 50,
         })
       : [];
   }

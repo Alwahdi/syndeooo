@@ -195,8 +195,8 @@ model Profile {
   avatarUrl           String?
   bio                 String?
   city                String?
-  specialties         String[]
-  qualifications      String[]
+  specialties         String[]           @default([])
+  qualifications      String[]           @default([])
   jobRoleId           String?
   yearsOfExperience   Int?
   licenseNumber       String?
@@ -239,7 +239,7 @@ model Clinic {
   description         String?
   address             String?
   city                String?
-  specialties         String[]
+  specialties         String[]           @default([])
   licenseNumber       String?
   locationLat         Float?
   locationLng         Float?

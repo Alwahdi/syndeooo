@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 
-const publicPaths = [
+const defaultPublicPaths = [
   "/sign-in",
   "/sign-up",
   "/api/auth",
@@ -8,7 +8,7 @@ const publicPaths = [
   "/favicon.ico",
 ];
 
-const isPublicPath = (pathname: string) =>
+const isPublicPath = (pathname: string, publicPaths: string[]) =>
   publicPaths.some(
     (path) => pathname === path || pathname.startsWith(`${path}/`)
   );
@@ -21,16 +21,21 @@ const isPublicPath = (pathname: string) =>
 export const authMiddleware = (
   callback?: (
     request: NextRequest
-  ) => Response | void | undefined | Promise<Response | void | undefined>
+  ) => Response | undefined | Promise<Response | undefined>,
+  options?: { additionalPublicPaths?: string[] }
 ) => {
+  const publicPaths = options?.additionalPublicPaths
+    ? [...defaultPublicPaths, ...options.additionalPublicPaths]
+    : defaultPublicPaths;
+
   return async (request: NextRequest) => {
     const { pathname } = request.nextUrl;
 
     // Skip auth check for public paths
-    if (isPublicPath(pathname)) {
+    if (isPublicPath(pathname, publicPaths)) {
       if (callback) {
         const result = await callback(request);
-        if (result !== undefined) {
+        if (result) {
           return result;
         }
       }
@@ -52,7 +57,7 @@ export const authMiddleware = (
     // Run additional middleware if provided
     if (callback) {
       const result = await callback(request);
-      if (result !== undefined) {
+      if (result) {
         return result;
       }
     }

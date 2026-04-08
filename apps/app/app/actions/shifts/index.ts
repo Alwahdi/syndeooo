@@ -38,7 +38,7 @@ export async function createShift(input: CreateShiftInput) {
         title: input.title,
         description: input.description,
         roleRequired: input.roleRequired,
-        shiftDate: new Date(input.shiftDate),
+        shiftDate: new Date(`${input.shiftDate}T00:00:00`),
         startTime: input.startTime,
         endTime: input.endTime,
         hourlyRate: input.hourlyRate,
@@ -67,12 +67,12 @@ export async function getShifts(filters?: {
     return { error: "Unauthorized", shifts: [] };
   }
 
-  const startOfDay = new Date();
-  startOfDay.setHours(0, 0, 0, 0);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   const where: Record<string, unknown> = {
     status: "open",
-    shiftDate: { gte: startOfDay },
+    shiftDate: { gte: today },
   };
 
   if (filters?.city) {
@@ -146,11 +146,21 @@ export async function cancelShift(shiftId: string) {
     return { error: "Shift not found" };
   }
 
-  await database.shift.update({
-    where: { id: shiftId },
-    data: { status: "cancelled" },
-  });
+  await database.$transaction([
+    database.booking.updateMany({
+      where: {
+        shiftId,
+        status: { in: ["requested", "accepted", "confirmed"] },
+      },
+      data: { status: "cancelled" },
+    }),
+    database.shift.update({
+      where: { id: shiftId },
+      data: { status: "cancelled" },
+    }),
+  ]);
 
   revalidatePath("/shifts");
+  revalidatePath("/bookings");
   return { success: true };
 }

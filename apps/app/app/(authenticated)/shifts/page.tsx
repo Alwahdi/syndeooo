@@ -1,3 +1,4 @@
+import { hasRole } from "@repo/auth/roles";
 import { currentUser } from "@repo/auth/server";
 import { database } from "@repo/database";
 import type { Metadata } from "next";
@@ -15,17 +16,10 @@ export default async function ShiftsPage() {
     return null;
   }
 
-  const clinicRole = await database.userRole.findFirst({
-    where: { userId: user.id, role: "clinic" },
-  });
-
-  const isClinic = !!clinicRole;
+  const isClinic = await hasRole(user.id, "clinic");
 
   // Fetch shifts
   const now = new Date();
-  const startOfToday = new Date(now);
-  startOfToday.setHours(0, 0, 0, 0);
-
   const shifts = isClinic
     ? await database.shift.findMany({
         where: {
@@ -40,7 +34,7 @@ export default async function ShiftsPage() {
     : await database.shift.findMany({
         where: {
           status: "open",
-          shiftDate: { gte: startOfToday },
+          shiftDate: { gte: now },
         },
         include: {
           clinic: { select: { name: true } },

@@ -1,8 +1,18 @@
 "use server";
 
 import { currentUser } from "@repo/auth/server";
+import type { BookingStatus } from "@repo/database";
 import { database } from "@repo/database";
 import { revalidatePath } from "next/cache";
+
+const VALID_TRANSITIONS: Record<string, BookingStatus[]> = {
+  requested: ["accepted", "declined", "cancelled"],
+  accepted: ["confirmed", "cancelled"],
+  confirmed: ["completed", "cancelled"],
+  declined: [],
+  cancelled: [],
+  completed: [],
+};
 
 export async function applyForShift(shiftId: string) {
   const user = await currentUser();
@@ -34,18 +44,6 @@ export async function applyForShift(shiftId: string) {
     return { error: "Shift not available" };
   }
 
-  const existing = await database.booking.findFirst({
-    where: {
-      shiftId,
-      professionalId: profile.id,
-      status: { notIn: ["cancelled", "declined"] },
-    },
-  });
-
-  if (existing) {
-    return { error: "Already applied for this shift" };
-  }
-
   try {
     await database.booking.create({
       data: {
@@ -60,6 +58,10 @@ export async function applyForShift(shiftId: string) {
     revalidatePath("/bookings");
     return { success: true };
   } catch (error) {
+    // Unique constraint violation means already applied
+    if (error instanceof Error && error.message.includes("Unique constraint")) {
+      return { error: "Already applied for this shift" };
+    }
     console.error("Apply for shift error:", error);
     return { error: "Failed to apply" };
   }
@@ -81,6 +83,14 @@ export async function updateBookingStatus(
 
   if (!booking) {
     return { error: "Booking not found" };
+  }
+
+  // Validate state transition
+  const allowed = VALID_TRANSITIONS[booking.status];
+  if (!allowed?.includes(status)) {
+    return {
+      error: `Cannot transition from "${booking.status}" to "${status}"`,
+    };
   }
 
   const isClinicOwner = booking.shift.clinic.userId === user.id;

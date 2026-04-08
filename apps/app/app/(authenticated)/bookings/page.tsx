@@ -1,3 +1,4 @@
+import { hasRole } from "@repo/auth/roles";
 import { currentUser } from "@repo/auth/server";
 import { database } from "@repo/database";
 import type { Metadata } from "next";
@@ -15,11 +16,7 @@ export default async function BookingsPage() {
     return null;
   }
 
-  const clinicRole = await database.userRole.findFirst({
-    where: { userId: user.id, role: "clinic" },
-  });
-
-  const isClinic = !!clinicRole;
+  const isClinic = await hasRole(user.id, "clinic");
 
   const bookings = isClinic
     ? await database.booking.findMany({
