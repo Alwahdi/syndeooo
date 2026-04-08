@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
 import { AuthProvider } from "../provider";
 
 describe("AuthProvider", () => {
@@ -17,9 +17,9 @@ describe("AuthProvider", () => {
   it("accepts optional props without error", () => {
     render(
       <AuthProvider
+        helpUrl="https://example.com/help"
         privacyUrl="https://example.com/privacy"
         termsUrl="https://example.com/terms"
-        helpUrl="https://example.com/help"
       >
         <span>Content</span>
       </AuthProvider>

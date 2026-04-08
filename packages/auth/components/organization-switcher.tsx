@@ -1,8 +1,8 @@
 "use client";
 
-import { organization, useSession } from "../client";
-import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { organization, useSession } from "../client";
 
 interface OrganizationSwitcherProps {
   afterSelectOrganizationUrl?: string;
@@ -11,9 +11,9 @@ interface OrganizationSwitcherProps {
 
 interface Organization {
   id: string;
+  logo: string | null;
   name: string;
   slug: string | null;
-  logo: string | null;
 }
 
 export const OrganizationSwitcher = ({
@@ -74,11 +74,11 @@ export const OrganizationSwitcher = ({
   return (
     <div className="relative">
       <button
+        aria-expanded={open}
+        aria-haspopup="listbox"
         className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-accent"
         onClick={() => setOpen(!open)}
         type="button"
-        aria-haspopup="listbox"
-        aria-expanded={open}
       >
         {activeOrg?.logo ? (
           <img
@@ -87,7 +87,7 @@ export const OrganizationSwitcher = ({
             src={activeOrg.logo}
           />
         ) : (
-          <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded bg-primary text-xs font-medium text-primary-foreground">
+          <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded bg-primary font-medium text-primary-foreground text-xs">
             {activeOrg?.name?.[0]?.toUpperCase() ?? "O"}
           </div>
         )}
@@ -98,17 +98,17 @@ export const OrganizationSwitcher = ({
       {open && filteredOrgs.length > 0 && (
         <div
           className="absolute top-full left-0 z-50 mt-1 w-full rounded-md border bg-popover p-1 shadow-md"
-          role="listbox"
           onKeyDown={handleKeyDown}
+          role="listbox"
         >
           {filteredOrgs.map((org) => (
             <button
+              aria-selected={org.id === activeOrgId}
               className="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm hover:bg-accent"
               key={org.id}
               onClick={() => handleSelectOrg(org.id)}
-              type="button"
               role="option"
-              aria-selected={org.id === activeOrgId}
+              type="button"
             >
               <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-muted text-xs">
                 {org.name[0]?.toUpperCase()}

@@ -1,0 +1,122 @@
+"use server";
+
+import { currentUser } from "@repo/auth/server";
+import type { BookingStatus } from "@repo/database";
+import { database } from "@repo/database";
+import { revalidatePath } from "next/cache";
+
+const VALID_TRANSITIONS: Record<string, BookingStatus[]> = {
+  requested: ["accepted", "declined", "cancelled"],
+  accepted: ["confirmed", "cancelled"],
+  confirmed: ["completed", "cancelled"],
+  declined: [],
+  cancelled: [],
+  completed: [],
+};
+
+export async function applyForShift(shiftId: string) {
+  const user = await currentUser();
+  if (!user) {
+    return { error: "Unauthorized" };
+  }
+
+  const userRole = await database.userRole.findFirst({
+    where: { userId: user.id, role: "professional" },
+  });
+
+  if (!userRole) {
+    return { error: "Only professionals can apply for shifts" };
+  }
+
+  const profile = await database.profile.findUnique({
+    where: { userId: user.id },
+  });
+
+  if (!profile) {
+    return { error: "Complete your profile first" };
+  }
+
+  const shift = await database.shift.findFirst({
+    where: { id: shiftId, status: "open" },
+  });
+
+  if (!shift) {
+    return { error: "Shift not available" };
+  }
+
+  try {
+    await database.booking.create({
+      data: {
+        shiftId,
+        professionalId: profile.id,
+        clinicId: shift.clinicId,
+        status: "requested",
+      },
+    });
+
+    revalidatePath("/shifts");
+    revalidatePath("/bookings");
+    return { success: true };
+  } catch (error) {
+    // Unique constraint violation means already applied
+    if (error instanceof Error && error.message.includes("Unique constraint")) {
+      return { error: "Already applied for this shift" };
+    }
+    console.error("Apply for shift error:", error);
+    return { error: "Failed to apply" };
+  }
+}
+
+export async function updateBookingStatus(
+  bookingId: string,
+  status: "accepted" | "declined" | "confirmed" | "cancelled"
+) {
+  const user = await currentUser();
+  if (!user) {
+    return { error: "Unauthorized" };
+  }
+
+  const booking = await database.booking.findUnique({
+    where: { id: bookingId },
+    include: { shift: { include: { clinic: true } } },
+  });
+
+  if (!booking) {
+    return { error: "Booking not found" };
+  }
+
+  // Validate state transition
+  const allowed = VALID_TRANSITIONS[booking.status];
+  if (!allowed?.includes(status)) {
+    return {
+      error: `Cannot transition from "${booking.status}" to "${status}"`,
+    };
+  }
+
+  const isClinicOwner = booking.shift.clinic.userId === user.id;
+
+  const profile = await database.profile.findUnique({
+    where: { userId: user.id },
+  });
+  const isProfessional = profile?.id === booking.professionalId;
+
+  if (
+    (["accepted", "declined"].includes(status) && !isClinicOwner) ||
+    (["confirmed", "cancelled"].includes(status) && !isProfessional)
+  ) {
+    return { error: "Not authorized for this action" };
+  }
+
+  try {
+    await database.booking.update({
+      where: { id: bookingId },
+      data: { status },
+    });
+
+    revalidatePath("/bookings");
+    return { success: true };
+  } catch (error) {
+    console.error("Update booking status error:", error);
+    return { error: "Failed to update booking" };
+  }
+}

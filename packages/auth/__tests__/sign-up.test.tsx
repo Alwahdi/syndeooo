@@ -147,7 +147,7 @@ describe("SignUp component", () => {
     const button = screen.getByRole("button", { name: "Creating account..." });
     expect(button).toBeDisabled();
 
-    resolveSignUp!({ data: { user: { id: "1" } } });
+    resolveSignUp?.({ data: { user: { id: "1" } } });
   });
 
   it("has required fields", () => {

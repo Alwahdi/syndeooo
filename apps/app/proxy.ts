@@ -11,11 +11,18 @@ const securityHeaders = env.FLAGS_SECRET
   ? securityMiddleware(noseconeOptionsWithToolbar)
   : securityMiddleware(noseconeOptions);
 
-// Better Auth middleware checks for session cookie on protected routes
-// Security headers are applied in the callback
-export default authMiddleware(() => {
-  return securityHeaders();
-});
+export default authMiddleware(
+  (_request: NextRequest) => {
+    return securityHeaders();
+  },
+  {
+    additionalPublicPaths: [
+      "/.well-known",
+      "/verify-email",
+      "/api/job-roles",
+    ],
+  }
+);
 
 export const config = {
   matcher: [

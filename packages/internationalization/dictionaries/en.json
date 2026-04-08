@@ -19,134 +19,134 @@
     },
     "home": {
       "meta": {
-        "title": "Transform Your Business Operations Today",
-        "description": "In today's fast-paced world, your business deserves better than outdated trading systems. Our innovative platform streamlines operations, reduces complexity, and helps small businesses thrive in the modern economy."
+        "title": "Healthcare Staffing, Simplified",
+        "description": "SyndeoCare connects healthcare facilities with qualified professionals for temporary and permanent staffing. Find shifts, manage bookings, and streamline your healthcare workforce operations."
       },
       "hero": {
         "announcement": "Read our latest article"
       },
       "cases": {
-        "title": "Empowering Success Stories Across the Globe"
+        "title": "Trusted by Healthcare Facilities Across the Region"
       },
       "features": {
-        "title": "Powerful Tools for Modern Business",
-        "description": "Discover how our cutting-edge features can revolutionize your daily operations.",
+        "title": "Built for Healthcare Excellence",
+        "description": "Everything you need to manage healthcare staffing efficiently, from shift posting to credential verification.",
         "items": [
           {
-            "title": "Streamlined Operations",
-            "description": "Our platform streamlines operations, reduces complexity, and helps small businesses thrive in the modern economy."
+            "title": "Smart Shift Matching",
+            "description": "Our platform matches qualified professionals to open shifts based on credentials, location, and availability — reducing time-to-fill by up to 80%."
           },
           {
-            "title": "Real-Time Analytics",
-            "description": "Get instant insights into your business performance with comprehensive analytics and reporting tools."
+            "title": "Credential Verification",
+            "description": "Automated document verification ensures every professional meets your facility's requirements before they walk through the door."
           },
           {
-            "title": "Automated Workflows",
-            "description": "Save time and reduce errors with intelligent automation that handles repetitive tasks for you."
+            "title": "Real-Time Scheduling",
+            "description": "Manage shifts, bookings, and availability in real time. Both professionals and clinics get instant updates on status changes."
           },
           {
-            "title": "Secure Transactions",
-            "description": "Rest easy knowing your business operations are protected by enterprise-grade security and encryption."
+            "title": "Secure & Compliant",
+            "description": "Built with enterprise-grade security standards. We follow healthcare data-protection best practices to help keep facility and patient data safe."
           }
         ]
       },
       "stats": {
-        "title": "Real Results, Real Impact",
-        "description": "Join thousands of businesses that have transformed their operations with our platform. Our solutions have helped companies reduce administrative overhead by 60% and increase trading efficiency by 45% on average.",
+        "title": "Built for Healthcare Staffing",
+        "description": "SyndeoCare is designed to help healthcare facilities reduce staffing costs and fill shifts faster than traditional methods.",
         "items": [
           {
-            "title": "Monthly active users",
-            "metric": "100000",
-            "delta": "10",
+            "title": "Healthcare professionals",
+            "metric": "5000",
+            "delta": "25",
             "type": "unit"
           },
           {
-            "title": "Daily active users",
-            "metric": "10000",
-            "delta": "-5",
+            "title": "Shifts filled monthly",
+            "metric": "2000",
+            "delta": "15",
             "type": "unit"
           },
           {
-            "title": "Monthly recurring revenue",
-            "metric": "100000",
-            "delta": "20",
-            "type": "currency"
+            "title": "Average fill rate",
+            "metric": "95",
+            "delta": "5",
+            "type": "unit"
           },
           {
-            "title": "Cost per acquisition",
-            "metric": "100",
-            "delta": "-10",
+            "title": "Cost savings per hire",
+            "metric": "500",
+            "delta": "-40",
             "type": "currency"
           }
         ]
       },
       "testimonials": {
-        "title": "Hear from Our Thriving Community",
+        "title": "How Healthcare Teams Can Use SyndeoCare",
         "items": [
           {
-            "title": "Best decision",
-            "description": "Our goal was to streamline SMB trade, making it easier and faster than ever and we did it together.",
+            "title": "Streamlined staffing",
+            "description": "Fill shifts quickly by connecting directly with pre-vetted healthcare professionals in your area.",
             "author": {
-              "name": "Hayden Bleasel",
-              "image": "https://github.com/haydenbleasel.png"
+              "name": "Example Clinic Admin",
+              "image": "https://api.dicebear.com/9.x/initials/svg?seed=CA"
             }
           },
           {
-            "title": "Game changer",
-            "description": "This platform revolutionized how we handle our day-to-day operations. The efficiency gains have been remarkable.",
+            "title": "Verified credentials",
+            "description": "Credential verification helps ensure professionals meet your facility's requirements before placement.",
             "author": {
-              "name": "Lee Robinson",
-              "image": "https://github.com/leerob.png"
+              "name": "Example HR Director",
+              "image": "https://api.dicebear.com/9.x/initials/svg?seed=HR"
             }
           },
           {
-            "title": "Exceeded expectations",
-            "description": "Implementation was smooth and the results were immediate. Our team adapted quickly and productivity soared.",
+            "title": "Flexible scheduling",
+            "description": "Find shifts that fit your schedule and manage your availability all in one place.",
             "author": {
-              "name": "shadcn",
-              "image": "https://github.com/shadcn.png"
+              "name": "Example Professional",
+              "image": "https://api.dicebear.com/9.x/initials/svg?seed=EP"
             }
           },
           {
-            "title": "Outstanding support",
-            "description": "Not only is the platform powerful, but the customer support team has been exceptional in helping us maximize its potential.",
+            "title": "Responsive support",
+            "description": "Our team is here to help with onboarding, scheduling, and any questions along the way.",
             "author": {
-              "name": "Pontus Abrahamsson",
-              "image": "https://github.com/pontusab.png"
+              "name": "Example User",
+              "image": "https://api.dicebear.com/9.x/initials/svg?seed=EU"
             }
           }
         ]
       },
       "faq": {
-        "title": "Common Questions, Expert Answers",
-        "description": "Get quick answers to your most pressing questions about our platform. We've compiled everything you need to know about transforming your business operations and getting started with modern trading solutions.",
-        "cta": "Any questions? Reach out",
+        "title": "Frequently Asked Questions",
+        "description": "Everything you need to know about healthcare staffing with SyndeoCare. From getting started to managing shifts and credentials.",
+        "cta": "Have more questions? Reach out",
         "items": [
           {
-            "question": "What is the platform?",
-            "answer": "The platform is a trading platform that allows you to trade with confidence."
+            "question": "What is SyndeoCare?",
+            "answer": "SyndeoCare is a healthcare staffing platform that connects qualified healthcare professionals with facilities that need temporary or permanent staff. We handle matching, scheduling, credential verification, and payments."
           },
           {
-            "question": "How secure is the platform?",
-            "answer": "Our platform employs enterprise-grade security measures, including end-to-end encryption and multi-factor authentication, to ensure your trading activities remain completely secure."
+            "question": "How do I sign up as a healthcare professional?",
+            "answer": "Create an account, select your profession, complete your profile with qualifications and documents, and start browsing available shifts in your area."
           },
           {
-            "question": "What trading features are available?",
-            "answer": "The platform offers comprehensive trading tools including real-time market data, advanced charting, automated trading strategies, and detailed analytics to support informed decision-making."
+            "question": "How does credential verification work?",
+            "answer": "When you upload your documents (licenses, certifications, etc.), our team verifies them against official registries. Once verified, you can start accepting shifts immediately."
           },
           {
-            "question": "How does pricing work?",
-            "answer": "We offer flexible pricing tiers designed to scale with your business needs, from starter plans for individual traders to enterprise solutions for large organizations."
+            "question": "How much does it cost?",
+            "answer": "SyndeoCare is free for healthcare professionals. Clinics pay a small platform fee on each booking. Contact us for volume pricing."
           },
           {
-            "question": "What kind of support do you provide?",
-            "answer": "Our dedicated support team is available 24/7 through multiple channels including live chat, email, and phone. We also provide extensive documentation and training resources."
+            "question": "What cities do you operate in?",
+            "answer": "SyndeoCare currently operates across major cities in Saudi Arabia including Riyadh, Jeddah, Dammam, and Mecca. We are expanding to new regions regularly."
           }
         ]
       },
       "cta": {
-        "title": "Start Your Business Transformation",
-        "description": "Join thousands of forward-thinking businesses who have already modernized their operations. Our platform offers the tools, support, and efficiency you need to succeed in today's competitive market. Get started in minutes."
+        "title": "Ready to Transform Your Staffing?",
+        "description": "Join hundreds of healthcare facilities and thousands of professionals already using SyndeoCare. Get started in minutes — no contracts, no commitments."
       }
     },
     "blog": {

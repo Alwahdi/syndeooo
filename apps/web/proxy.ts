@@ -56,10 +56,10 @@ const composedMiddleware = createNEMO(
 // Auth middleware wraps other middleware in its callback
 export default authMiddleware(async (request) => {
   // Run security headers first
-  const headersResponse = securityHeaders();
+  const headersResponse = await securityHeaders();
 
   // Then run composed middleware (i18n + arcjet)
-  const middlewareResponse = await composedMiddleware(request, {} as any);
+  const middlewareResponse = await composedMiddleware(request, undefined);
 
   // Merge security headers onto composed response so they are always applied
   if (middlewareResponse) {

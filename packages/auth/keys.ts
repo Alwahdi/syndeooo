@@ -8,7 +8,7 @@ export const keys = () => {
     server: {
       BETTER_AUTH_SECRET: isProduction
         ? z.string().min(32)
-        : z.string().min(32).optional(),
+        : z.string().min(32).default("dev-secret-key-minimum-32-chars-long"),
       BETTER_AUTH_URL: z.string().url().optional(),
       BETTER_AUTH_TRUSTED_ORIGINS: z.string().optional(),
       GOOGLE_CLIENT_ID: z.string().optional(),

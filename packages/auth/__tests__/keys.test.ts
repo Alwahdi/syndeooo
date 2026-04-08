@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock @t3-oss/env-nextjs to avoid client/server env access restrictions in tests
 vi.mock("@t3-oss/env-nextjs", () => ({
@@ -46,13 +46,13 @@ describe("keys - environment validation", () => {
   });
 
   it("allows all variables to be optional/undefined", async () => {
-    delete process.env.BETTER_AUTH_SECRET;
-    delete process.env.BETTER_AUTH_URL;
-    delete process.env.BETTER_AUTH_TRUSTED_ORIGINS;
-    delete process.env.GOOGLE_CLIENT_ID;
-    delete process.env.GOOGLE_CLIENT_SECRET;
-    delete process.env.GITHUB_CLIENT_ID;
-    delete process.env.GITHUB_CLIENT_SECRET;
+    process.env.BETTER_AUTH_SECRET = undefined;
+    process.env.BETTER_AUTH_URL = undefined;
+    process.env.BETTER_AUTH_TRUSTED_ORIGINS = undefined;
+    process.env.GOOGLE_CLIENT_ID = undefined;
+    process.env.GOOGLE_CLIENT_SECRET = undefined;
+    process.env.GITHUB_CLIENT_ID = undefined;
+    process.env.GITHUB_CLIENT_SECRET = undefined;
 
     const { keys } = await import("../keys");
     const env = keys();
