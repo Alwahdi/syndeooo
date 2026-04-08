@@ -23,12 +23,12 @@ const publicPaths = [
 const isPublicPath = (pathname: string) =>
   publicPaths.some((p) => pathname.startsWith(p));
 
-export default authMiddleware((request: NextRequest) => {
+export default authMiddleware(async (request: NextRequest) => {
   const { pathname } = request.nextUrl;
 
   // Allow public paths without auth check
   if (isPublicPath(pathname)) {
-    return securityHeaders();
+    return await securityHeaders();
   }
 
   // Check for Better Auth session cookie
@@ -42,7 +42,7 @@ export default authMiddleware((request: NextRequest) => {
     return NextResponse.redirect(signInUrl);
   }
 
-  return securityHeaders();
+  return await securityHeaders();
 });
 
 export const config = {

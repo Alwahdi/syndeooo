@@ -15,11 +15,11 @@ export default async function ProfilePage() {
     return null;
   }
 
-  const userRole = await database.userRole.findFirst({
-    where: { userId: user.id },
+  const clinicRole = await database.userRole.findFirst({
+    where: { userId: user.id, role: "clinic" },
   });
 
-  const isClinic = userRole?.role === "clinic";
+  const isClinic = !!clinicRole;
 
   const profile = await database.profile.findUnique({
     where: { userId: user.id },

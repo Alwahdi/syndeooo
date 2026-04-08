@@ -15,14 +15,17 @@ export default async function ShiftsPage() {
     return null;
   }
 
-  const userRole = await database.userRole.findFirst({
-    where: { userId: user.id },
+  const clinicRole = await database.userRole.findFirst({
+    where: { userId: user.id, role: "clinic" },
   });
 
-  const isClinic = userRole?.role === "clinic";
+  const isClinic = !!clinicRole;
 
   // Fetch shifts
   const now = new Date();
+  const startOfToday = new Date(now);
+  startOfToday.setHours(0, 0, 0, 0);
+
   const shifts = isClinic
     ? await database.shift.findMany({
         where: {
@@ -37,7 +40,7 @@ export default async function ShiftsPage() {
     : await database.shift.findMany({
         where: {
           status: "open",
-          shiftDate: { gte: now },
+          shiftDate: { gte: startOfToday },
         },
         include: {
           clinic: { select: { name: true } },

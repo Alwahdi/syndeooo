@@ -15,11 +15,11 @@ export default async function BookingsPage() {
     return null;
   }
 
-  const userRole = await database.userRole.findFirst({
-    where: { userId: user.id },
+  const clinicRole = await database.userRole.findFirst({
+    where: { userId: user.id, role: "clinic" },
   });
 
-  const isClinic = userRole?.role === "clinic";
+  const isClinic = !!clinicRole;
 
   const bookings = isClinic
     ? await database.booking.findMany({

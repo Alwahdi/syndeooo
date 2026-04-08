@@ -38,12 +38,12 @@ export async function markOnboardingComplete(
   role: AppRole
 ): Promise<void> {
   if (role === "professional") {
-    await database.profile.update({
+    await database.profile.updateMany({
       where: { userId },
       data: { onboardingCompleted: true },
     });
   } else if (role === "clinic") {
-    await database.clinic.update({
+    await database.clinic.updateMany({
       where: { userId },
       data: { onboardingCompleted: true },
     });

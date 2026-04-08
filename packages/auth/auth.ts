@@ -71,36 +71,40 @@ export const auth = betterAuth({
     user: {
       create: {
         after: async (user) => {
-          const role =
-            (user.selectedRole as "professional" | "clinic") || "professional";
+          await database.$transaction(async (tx) => {
+            const allowedRoles: ("professional" | "clinic")[] = ["professional", "clinic"];
+            const role = allowedRoles.includes(user.selectedRole as "professional" | "clinic")
+              ? (user.selectedRole as "professional" | "clinic")
+              : "professional";
 
-          // Create user role
-          await database.userRole.create({
-            data: { userId: user.id, role },
-          });
-
-          // Create empty profile or clinic record
-          if (role === "professional") {
-            await database.profile.create({
-              data: {
-                userId: user.id,
-                email: user.email,
-                fullName: user.name,
-              },
+            // Create user role
+            await tx.userRole.create({
+              data: { userId: user.id, role },
             });
-          } else if (role === "clinic") {
-            await database.clinic.create({
-              data: {
-                userId: user.id,
-                email: user.email,
-                name: user.name,
-              },
-            });
-          }
 
-          // Create default user preferences
-          await database.userPreferences.create({
-            data: { userId: user.id },
+            // Create empty profile or clinic record
+            if (role === "professional") {
+              await tx.profile.create({
+                data: {
+                  userId: user.id,
+                  email: user.email,
+                  fullName: user.name,
+                },
+              });
+            } else if (role === "clinic") {
+              await tx.clinic.create({
+                data: {
+                  userId: user.id,
+                  email: user.email,
+                  name: user.name,
+                },
+              });
+            }
+
+            // Create default user preferences
+            await tx.userPreferences.create({
+              data: { userId: user.id },
+            });
           });
         },
       },

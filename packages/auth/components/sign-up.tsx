@@ -55,6 +55,7 @@ export const SignUp = () => {
         email,
         password,
         callbackURL: redirectPath,
+        selectedRole,
       });
 
       if (result.error) {

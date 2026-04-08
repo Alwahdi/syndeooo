@@ -1,6 +1,7 @@
 "use server";
 
 import { currentUser } from "@repo/auth/server";
+import { hasRole } from "@repo/auth/roles";
 import { database } from "@repo/database";
 import { revalidatePath } from "next/cache";
 
@@ -19,6 +20,12 @@ export async function completeProfessionalOnboarding(
   const user = await currentUser();
   if (!user) {
     return { error: "Unauthorized" };
+  }
+
+  // Verify user has professional role
+  const isProfessional = await hasRole(user.id, "professional");
+  if (!isProfessional) {
+    return { error: "Forbidden" };
   }
 
   try {

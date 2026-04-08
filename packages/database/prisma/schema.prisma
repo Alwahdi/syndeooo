@@ -254,9 +254,10 @@ model Clinic {
 
   user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   shifts         Shift[]
-  bookings       Booking[]      @relation("ClinicBookings")
+  documents      Document[]
   conversationsAsClinic Conversation[] @relation("ClinicConversations")
   shiftInvitations ShiftInvitation[]
+  ratingsReceived Rating[]      @relation("RevieweeClinicRatings")
 
   @@index([userId])
   @@index([verificationStatus])
@@ -265,7 +266,8 @@ model Clinic {
 model Document {
   id              String           @id @default(cuid())
   userId          String
-  profileId       String
+  profileId       String?
+  clinicId        String?
   documentType    DocumentType
   name            String?
   fileUrl         String
@@ -277,10 +279,12 @@ model Document {
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
 
-  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profile Profile? @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  clinic  Clinic?  @relation(fields: [clinicId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([profileId])
+  @@index([clinicId])
   @@index([status])
 }
 
@@ -322,7 +326,6 @@ model Booking {
   id                String        @id @default(cuid())
   shiftId           String
   professionalId    String
-  clinicId          String
   status            BookingStatus @default(requested)
   checkInTime       DateTime?
   checkOutTime      DateTime?
@@ -334,32 +337,34 @@ model Booking {
 
   shift        Shift   @relation(fields: [shiftId], references: [id], onDelete: Cascade)
   professional Profile @relation("ProfessionalBookings", fields: [professionalId], references: [id], onDelete: Cascade)
-  clinic       Clinic  @relation("ClinicBookings", fields: [clinicId], references: [id], onDelete: Cascade)
   ratings      Rating[]
   conversation Conversation?
 
+  @@unique([shiftId, professionalId])
   @@index([shiftId])
   @@index([professionalId])
-  @@index([clinicId])
   @@index([status])
 }
 
 model Rating {
-  id         String   @id @default(cuid())
-  bookingId  String
-  reviewerId String
-  revieweeId String
-  rating     Int
-  comment    String?
-  createdAt  DateTime @default(now())
+  id                 String   @id @default(cuid())
+  bookingId          String
+  reviewerId         String
+  revieweeProfileId  String?
+  revieweeClinicId   String?
+  rating             Int
+  comment            String?
+  createdAt          DateTime @default(now())
 
-  booking  Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
-  reviewer Profile @relation("ReviewerRatings", fields: [reviewerId], references: [id], onDelete: Cascade)
-  reviewee Profile @relation("RevieweeRatings", fields: [revieweeId], references: [id], onDelete: Cascade)
+  booking         Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  reviewer        Profile  @relation("ReviewerRatings", fields: [reviewerId], references: [id], onDelete: Cascade)
+  revieweeProfile Profile? @relation("RevieweeRatings", fields: [revieweeProfileId], references: [id], onDelete: Cascade)
+  revieweeClinic  Clinic?  @relation("RevieweeClinicRatings", fields: [revieweeClinicId], references: [id], onDelete: Cascade)
 
   @@index([bookingId])
   @@index([reviewerId])
-  @@index([revieweeId])
+  @@index([revieweeProfileId])
+  @@index([revieweeClinicId])
 }
 
 model Availability {
@@ -447,7 +452,7 @@ model UserPreferences {
 model EmailVerificationCode {
   id        String   @id @default(cuid())
   email     String
-  code      String   @db.VarChar(6)
+  codeHash  String   @db.VarChar(64)
   expiresAt DateTime
   verified  Boolean  @default(false)
   attempts  Int      @default(0)

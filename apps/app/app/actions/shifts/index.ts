@@ -67,9 +67,12 @@ export async function getShifts(filters?: {
     return { error: "Unauthorized", shifts: [] };
   }
 
+  const startOfDay = new Date();
+  startOfDay.setHours(0, 0, 0, 0);
+
   const where: Record<string, unknown> = {
     status: "open",
-    shiftDate: { gte: new Date() },
+    shiftDate: { gte: startOfDay },
   };
 
   if (filters?.city) {

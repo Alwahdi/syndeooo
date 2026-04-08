@@ -59,7 +59,7 @@ export default authMiddleware(async (request) => {
   const headersResponse = await securityHeaders();
 
   // Then run composed middleware (i18n + arcjet)
-  const middlewareResponse = await composedMiddleware(request, {} as never);
+  const middlewareResponse = await composedMiddleware(request, undefined);
 
   // Merge security headers onto composed response so they are always applied
   if (middlewareResponse) {

@@ -33,12 +33,27 @@ export function ProfessionalOnboardingForm() {
   const [isPending, startTransition] = useTransition();
   const [jobRoles, setJobRoles] = useState<JobRole[]>([]);
   const [error, setError] = useState("");
+  const [isLoadingJobRoles, setIsLoadingJobRoles] = useState(true);
+  const [jobRolesError, setJobRolesError] = useState("");
 
   useEffect(() => {
+    setIsLoadingJobRoles(true);
     fetch("/api/job-roles")
-      .then((res) => res.json())
-      .then((data) => setJobRoles(data))
-      .catch(() => undefined);
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch job roles");
+        return res.json();
+      })
+      .then((data) => {
+        setJobRoles(data);
+        setJobRolesError("");
+      })
+      .catch((err) => {
+        setJobRolesError(err.message || "Failed to load job roles");
+        setJobRoles([]);
+      })
+      .finally(() => {
+        setIsLoadingJobRoles(false);
+      });
   }, []);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -101,9 +116,9 @@ export function ProfessionalOnboardingForm() {
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="jobRoleId">Profession</Label>
-              <Select name="jobRoleId" required>
+              <Select disabled={isLoadingJobRoles || jobRoles.length === 0} name="jobRoleId" required>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select your role" />
+                  <SelectValue placeholder={isLoadingJobRoles ? "Loading roles..." : "Select your role"} />
                 </SelectTrigger>
                 <SelectContent>
                   {jobRoles.map((role) => (
@@ -113,6 +128,7 @@ export function ProfessionalOnboardingForm() {
                   ))}
                 </SelectContent>
               </Select>
+              {jobRolesError && <p className="text-destructive text-sm">{jobRolesError}</p>}
             </div>
             <div className="space-y-2">
               <Label htmlFor="yearsOfExperience">Years of Experience</Label>
@@ -150,7 +166,7 @@ export function ProfessionalOnboardingForm() {
 
           {error && <p className="text-destructive text-sm">{error}</p>}
 
-          <Button className="w-full" disabled={isPending} type="submit">
+          <Button className="w-full" disabled={isPending || isLoadingJobRoles || jobRoles.length === 0} type="submit">
             {isPending ? (
               <>
                 <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />

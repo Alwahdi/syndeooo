@@ -8,11 +8,25 @@ import { database } from "@repo/database";
  * Returns the first role found (priority: super_admin > admin > clinic > professional)
  */
 export async function getUserRole(userId: string): Promise<AppRole | null> {
-  const userRole = await database.userRole.findFirst({
+  const userRoles = await database.userRole.findMany({
     where: { userId },
-    orderBy: { createdAt: "asc" },
   });
-  return userRole?.role ?? null;
+
+  if (userRoles.length === 0) {
+    return null;
+  }
+
+  // Priority order: super_admin > admin > clinic > professional
+  const priority: AppRole[] = ["super_admin", "admin", "clinic", "professional"];
+
+  for (const priorityRole of priority) {
+    const foundRole = userRoles.find((ur) => ur.role === priorityRole);
+    if (foundRole) {
+      return foundRole.role;
+    }
+  }
+
+  return userRoles[0]?.role ?? null;
 }
 
 /**

@@ -21,7 +21,7 @@ const isPublicPath = (pathname: string) =>
 export const authMiddleware = (
   callback?: (
     request: NextRequest
-  ) => Response | undefined | Promise<Response | undefined>
+  ) => Response | void | undefined | Promise<Response | void | undefined>
 ) => {
   return async (request: NextRequest) => {
     const { pathname } = request.nextUrl;
@@ -30,7 +30,7 @@ export const authMiddleware = (
     if (isPublicPath(pathname)) {
       if (callback) {
         const result = await callback(request);
-        if (result) {
+        if (result !== undefined) {
           return result;
         }
       }
@@ -52,7 +52,7 @@ export const authMiddleware = (
     // Run additional middleware if provided
     if (callback) {
       const result = await callback(request);
-      if (result) {
+      if (result !== undefined) {
         return result;
       }
     }

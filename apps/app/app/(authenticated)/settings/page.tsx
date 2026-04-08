@@ -1,5 +1,6 @@
 import { currentUser } from "@repo/auth/server";
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { Header } from "../components/header";
 
 export const metadata: Metadata = {
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 export default async function SettingsPage() {
   const user = await currentUser();
   if (!user) {
-    return null;
+    redirect("/sign-in");
   }
 
   return (

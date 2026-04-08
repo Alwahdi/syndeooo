@@ -30,7 +30,7 @@ const statusMessages: Record<string, string> = {
   cancelled: "Booking has been cancelled",
 };
 
-export const BookingNotificationTemplate = ({
+const BookingNotificationTemplateComponent = ({
   recipientName,
   status,
   shiftTitle,
@@ -92,12 +92,17 @@ export const BookingNotificationTemplate = ({
   </Tailwind>
 );
 
-BookingNotificationTemplate.PreviewProps = {
-  recipientName: "Dr. Sarah",
-  status: "accepted",
-  shiftTitle: "Night Shift - Registered Nurse",
-  shiftDate: "January 15, 2026",
-  clinicName: "Downtown Medical Center",
-};
+export const BookingNotificationTemplate = Object.assign(
+  BookingNotificationTemplateComponent,
+  {
+    PreviewProps: {
+      recipientName: "Dr. Sarah",
+      status: "accepted",
+      shiftTitle: "Night Shift - Registered Nurse",
+      shiftDate: "January 15, 2026",
+      clinicName: "Downtown Medical Center",
+    } satisfies BookingNotificationTemplateProps,
+  }
+);
 
 export default BookingNotificationTemplate;

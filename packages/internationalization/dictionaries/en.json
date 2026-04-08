@@ -46,36 +46,37 @@
           },
           {
             "title": "Secure & Compliant",
-            "description": "Enterprise-grade security with full HIPAA compliance. Your facility and patient data stays protected with end-to-end encryption."
+            "description": "Built with industry-standard security practices and robust access controls to help protect your facility and data."
           }
         ]
       },
       "stats": {
-        "title": "Real Results for Healthcare",
-        "description": "Join hundreds of healthcare facilities and thousands of professionals who trust SyndeoCare for staffing. Our platform reduces staffing costs by 40% and fills shifts 3x faster than traditional methods.",
+        "title": "Platform Metrics",
+        "description": "Demo metrics for illustration purposes only. Actual results may vary.",
+        "demo": true,
         "items": [
           {
             "title": "Healthcare professionals",
-            "metric": "5000",
-            "delta": "25",
+            "metric": "TBD",
+            "delta": "TBD",
             "type": "unit"
           },
           {
             "title": "Shifts filled monthly",
-            "metric": "2000",
-            "delta": "15",
+            "metric": "TBD",
+            "delta": "TBD",
             "type": "unit"
           },
           {
             "title": "Average fill rate",
-            "metric": "95",
-            "delta": "5",
+            "metric": "TBD",
+            "delta": "TBD",
             "type": "unit"
           },
           {
             "title": "Cost savings per hire",
-            "metric": "500",
-            "delta": "-40",
+            "metric": "TBD",
+            "delta": "TBD",
             "type": "currency"
           }
         ]

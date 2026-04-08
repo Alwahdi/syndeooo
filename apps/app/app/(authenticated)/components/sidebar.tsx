@@ -64,34 +64,6 @@ const navItems = [
   },
 ];
 
-const _clinicNavItems = [
-  {
-    title: "Dashboard",
-    url: "/",
-    icon: HomeIcon,
-  },
-  {
-    title: "Manage Shifts",
-    url: "/shifts",
-    icon: BriefcaseIcon,
-  },
-  {
-    title: "Bookings",
-    url: "/bookings",
-    icon: CalendarIcon,
-  },
-  {
-    title: "Messages",
-    url: "/messages",
-    icon: MessageSquareIcon,
-  },
-  {
-    title: "Profile",
-    url: "/profile",
-    icon: UserIcon,
-  },
-];
-
 const secondaryNav = [
   {
     title: "Settings",
@@ -100,7 +72,7 @@ const secondaryNav = [
   },
   {
     title: "Support",
-    url: "#",
+    url: "mailto:support@syndeocare.com",
     icon: LifeBuoyIcon,
   },
 ];

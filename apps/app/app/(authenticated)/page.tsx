@@ -34,13 +34,15 @@ const App = async () => {
 
   // Fetch stats based on role
   const now = new Date();
+  const startOfDay = new Date(now);
+  startOfDay.setHours(0, 0, 0, 0);
 
   if (role === "clinic") {
     const [activeShifts, totalBookings, pendingBookings] = await Promise.all([
       database.shift.count({
         where: {
           clinic: { userId: user.id },
-          shiftDate: { gte: now },
+          shiftDate: { gte: startOfDay },
           status: "open",
         },
       }),
@@ -111,7 +113,7 @@ const App = async () => {
       where: {
         professional: { userId: user.id },
         status: { in: ["confirmed", "accepted"] },
-        shift: { shiftDate: { gte: now } },
+        shift: { shiftDate: { gte: startOfDay } },
       },
     }),
     database.booking.count({
@@ -151,7 +153,7 @@ const App = async () => {
             icon={<StarIcon className="h-4 w-4" />}
             label="Rating"
             value={
-              profile?.ratingAvg
+              profile?.ratingAvg != null
                 ? `${Number(profile.ratingAvg).toFixed(1)}`
                 : "N/A"
             }

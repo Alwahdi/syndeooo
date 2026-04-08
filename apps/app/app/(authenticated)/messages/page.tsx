@@ -15,11 +15,11 @@ export default async function MessagesPage() {
     return null;
   }
 
-  const userRole = await database.userRole.findFirst({
-    where: { userId: user.id },
+  const clinicRole = await database.userRole.findFirst({
+    where: { userId: user.id, role: "clinic" },
   });
 
-  const isClinic = userRole?.role === "clinic";
+  const isClinic = !!clinicRole;
 
   type ConversationResult = {
     id: string;
@@ -52,6 +52,7 @@ export default async function MessagesPage() {
             },
           },
           orderBy: { lastMessageAt: "desc" },
+          take: 50,
         })
       : [];
   } else {
@@ -72,6 +73,7 @@ export default async function MessagesPage() {
             },
           },
           orderBy: { lastMessageAt: "desc" },
+          take: 50,
         })
       : [];
   }

@@ -16,7 +16,7 @@ interface OtpTemplateProps {
   readonly email: string;
 }
 
-export const OtpTemplate = ({ code, email }: OtpTemplateProps) => (
+const OtpTemplateComponent = ({ code, email }: OtpTemplateProps) => (
   <Tailwind>
     <Html>
       <Head />
@@ -63,9 +63,14 @@ export const OtpTemplate = ({ code, email }: OtpTemplateProps) => (
   </Tailwind>
 );
 
-OtpTemplate.PreviewProps = {
-  code: "482916",
-  email: "user@example.com",
-};
+export const OtpTemplate = Object.assign(
+  OtpTemplateComponent,
+  {
+    PreviewProps: {
+      code: "482916",
+      email: "user@example.com",
+    } satisfies OtpTemplateProps,
+  }
+);
 
 export default OtpTemplate;

@@ -1,6 +1,7 @@
 "use server";
 
 import { currentUser } from "@repo/auth/server";
+import { hasRole } from "@repo/auth/roles";
 import { database } from "@repo/database";
 import { revalidatePath } from "next/cache";
 
@@ -17,6 +18,12 @@ interface ClinicOnboardingInput {
 export async function completeClinicOnboarding(input: ClinicOnboardingInput) {
   const user = await currentUser();
   if (!user) {
+    return { error: "Unauthorized" };
+  }
+
+  // Verify user has clinic role
+  const isClinic = await hasRole(user.id, "clinic");
+  if (!isClinic) {
     return { error: "Unauthorized" };
   }
 

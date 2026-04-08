@@ -290,10 +290,13 @@ export function ProfileForm({
             <div className="space-y-2">
               <Label htmlFor="yearsOfExperience">Years of Experience</Label>
               <Input
-                defaultValue={profile?.yearsOfExperience ?? 0}
+                defaultValue={Math.max(0, Math.min(50, profile?.yearsOfExperience ?? 0))}
                 id="yearsOfExperience"
+                max="50"
+                min="0"
                 name="yearsOfExperience"
                 required
+                step="1"
                 type="number"
               />
             </div>
