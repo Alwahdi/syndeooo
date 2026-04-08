@@ -26,6 +26,11 @@ model User {
   accounts      Account[]
   members       Member[]
   invitations   Invitation[]
+
+  // SyndeoCare relations
+  userRoles     UserRole[]
+  profile       Profile?
+  clinic        Clinic?
 }
 
 model Session {
@@ -118,9 +123,422 @@ model Invitation {
   @@index([inviterId])
 }
 
-// ─── Application Models ──────────────────────────────────────────────
+// ─── SyndeoCare Enums ────────────────────────────────────────────────
 
-model Page {
-  id   Int    @id @default(autoincrement())
-  name String
+enum AppRole {
+  professional
+  clinic
+  admin
+  super_admin
+}
+
+enum BookingStatus {
+  requested
+  accepted
+  declined
+  confirmed
+  checked_in
+  checked_out
+  completed
+  cancelled
+  no_show
+}
+
+enum DocumentType {
+  id
+  license
+  certification
+  business_license
+  insurance
+  other
+}
+
+enum VerificationStatus {
+  pending
+  verified
+  rejected
+}
+
+enum ShiftInvitationStatus {
+  pending
+  accepted
+  declined
+}
+
+enum AdminNoteType {
+  general
+  warning
+  verification
+  follow_up
+}
+
+// ─── SyndeoCare Models ──────────────────────────────────────────────
+
+model UserRole {
+  id        String   @id @default(cuid())
+  userId    String
+  role      AppRole
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, role])
+  @@index([userId])
+}
+
+model Profile {
+  id                  String             @id @default(cuid())
+  userId              String             @unique
+  fullName            String?
+  email               String?
+  phone               String?
+  avatarUrl           String?
+  bio                 String?
+  city                String?
+  specialties         String[]
+  qualifications      String[]
+  jobRoleId           String?
+  yearsOfExperience   Int?
+  licenseNumber       String?
+  hourlyRate          Decimal?           @db.Decimal(10, 2)
+  locationLat         Float?
+  locationLng         Float?
+  locationAddress     String?
+  maxTravelDistance    Int?
+  verificationStatus  VerificationStatus @default(pending)
+  isAvailable         Boolean            @default(true)
+  ratingAvg           Decimal?           @db.Decimal(3, 2)
+  ratingCount         Int                @default(0)
+  onboardingCompleted Boolean            @default(false)
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobRole        JobRole?       @relation(fields: [jobRoleId], references: [id])
+  documents      Document[]
+  availability   Availability[]
+  bookings       Booking[]      @relation("ProfessionalBookings")
+  ratingsGiven   Rating[]       @relation("ReviewerRatings")
+  ratingsReceived Rating[]      @relation("RevieweeRatings")
+  conversationsAsProfessional Conversation[] @relation("ProfessionalConversations")
+  shiftInvitations ShiftInvitation[]
+
+  @@index([userId])
+  @@index([verificationStatus])
+  @@index([isAvailable])
+  @@index([jobRoleId])
+}
+
+model Clinic {
+  id                  String             @id @default(cuid())
+  userId              String             @unique
+  name                String?
+  email               String?
+  phone               String?
+  logoUrl             String?
+  description         String?
+  address             String?
+  city                String?
+  specialties         String[]
+  licenseNumber       String?
+  locationLat         Float?
+  locationLng         Float?
+  taxId               String?
+  verificationStatus  VerificationStatus @default(pending)
+  ratingAvg           Decimal?           @db.Decimal(3, 2)
+  ratingCount         Int                @default(0)
+  settings            Json?
+  onboardingCompleted Boolean            @default(false)
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shifts         Shift[]
+  bookings       Booking[]      @relation("ClinicBookings")
+  conversationsAsClinic Conversation[] @relation("ClinicConversations")
+  shiftInvitations ShiftInvitation[]
+
+  @@index([userId])
+  @@index([verificationStatus])
+}
+
+model Document {
+  id              String           @id @default(cuid())
+  userId          String
+  profileId       String
+  documentType    DocumentType
+  name            String?
+  fileUrl         String
+  expiryDate      DateTime?
+  status          VerificationStatus @default(pending)
+  rejectionReason String?
+  reviewedBy      String?
+  reviewedAt      DateTime?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([profileId])
+  @@index([status])
+}
+
+model Shift {
+  id                      String    @id @default(cuid())
+  clinicId                String
+  title                   String
+  roleRequired            String
+  description             String?
+  shiftDate               DateTime  @db.Date
+  startTime               String
+  endTime                 String
+  hourlyRate              Decimal   @db.Decimal(10, 2)
+  requiredCertifications  String[]
+  locationAddress         String?
+  city                    String?
+  locationLat             Float?
+  locationLng             Float?
+  status                  String    @default("open")
+  isUrgent                Boolean   @default(false)
+  isFilled                Boolean   @default(false)
+  maxApplicants           Int       @default(1)
+  proposalDeadline        DateTime?
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+
+  clinic    Clinic    @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+  bookings  Booking[]
+  invitations ShiftInvitation[]
+
+  @@index([clinicId])
+  @@index([shiftDate])
+  @@index([isFilled])
+  @@index([roleRequired])
+  @@index([status])
+}
+
+model Booking {
+  id                String        @id @default(cuid())
+  shiftId           String
+  professionalId    String
+  clinicId          String
+  status            BookingStatus @default(requested)
+  checkInTime       DateTime?
+  checkOutTime      DateTime?
+  cancellationReason String?
+  notes             String?
+  cancellationFee   Decimal?      @db.Decimal(10, 2)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  shift        Shift   @relation(fields: [shiftId], references: [id], onDelete: Cascade)
+  professional Profile @relation("ProfessionalBookings", fields: [professionalId], references: [id], onDelete: Cascade)
+  clinic       Clinic  @relation("ClinicBookings", fields: [clinicId], references: [id], onDelete: Cascade)
+  ratings      Rating[]
+  conversation Conversation?
+
+  @@index([shiftId])
+  @@index([professionalId])
+  @@index([clinicId])
+  @@index([status])
+}
+
+model Rating {
+  id         String   @id @default(cuid())
+  bookingId  String
+  reviewerId String
+  revieweeId String
+  rating     Int
+  comment    String?
+  createdAt  DateTime @default(now())
+
+  booking  Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  reviewer Profile @relation("ReviewerRatings", fields: [reviewerId], references: [id], onDelete: Cascade)
+  reviewee Profile @relation("RevieweeRatings", fields: [revieweeId], references: [id], onDelete: Cascade)
+
+  @@index([bookingId])
+  @@index([reviewerId])
+  @@index([revieweeId])
+}
+
+model Availability {
+  id        String   @id @default(cuid())
+  profileId String
+  dayOfWeek Int      // 0 = Sunday, 6 = Saturday
+  startTime String
+  endTime   String
+  isAvailable Boolean @default(true)
+  createdAt DateTime @default(now())
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
+}
+
+model Conversation {
+  id              String    @id @default(cuid())
+  professionalId  String
+  clinicId        String
+  bookingId       String?   @unique
+  lastMessageAt   DateTime?
+  createdAt       DateTime  @default(now())
+
+  professional Profile  @relation("ProfessionalConversations", fields: [professionalId], references: [id], onDelete: Cascade)
+  clinic       Clinic   @relation("ClinicConversations", fields: [clinicId], references: [id], onDelete: Cascade)
+  booking      Booking? @relation(fields: [bookingId], references: [id], onDelete: SetNull)
+  messages     Message[]
+
+  @@index([professionalId])
+  @@index([clinicId])
+}
+
+model Message {
+  id              String   @id @default(cuid())
+  conversationId  String
+  senderId        String
+  senderType      AppRole
+  content         String?
+  fileUrl         String?
+  fileType        String?
+  fileName        String?
+  fileSize        Int?
+  isRead          Boolean  @default(false)
+  createdAt       DateTime @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId])
+  @@index([senderId])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String   // booking_request, booking_accepted, booking_declined, new_message, document_verified, shift_filled, rating_received, shift_invitation
+  title     String
+  message   String?
+  data      Json?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([isRead])
+}
+
+model UserPreferences {
+  id                  String   @id @default(cuid())
+  userId              String   @unique
+  language            String   @default("en")
+  theme               String   @default("system")
+  notificationsEmail  Boolean  @default(true)
+  notificationsPush   Boolean  @default(true)
+  notificationsInApp  Boolean  @default(true)
+  emailNewJobs        Boolean  @default(true)
+  emailMessages       Boolean  @default(true)
+  emailUpdates        Boolean  @default(true)
+  emailDigest         Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model EmailVerificationCode {
+  id        String   @id @default(cuid())
+  email     String
+  code      String   @db.VarChar(6)
+  expiresAt DateTime
+  verified  Boolean  @default(false)
+  attempts  Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([email])
+}
+
+model JobRole {
+  id           String   @id @default(cuid())
+  name         String   @unique
+  nameAr       String?
+  description  String?
+  isActive     Boolean  @default(true)
+  displayOrder Int      @default(0)
+  createdBy    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  profiles     Profile[]
+}
+
+model DocumentTypeConfig {
+  id           String   @id @default(cuid())
+  name         String   @unique
+  nameAr       String?
+  description  String?
+  isRequired   Boolean  @default(false)
+  appliesTo    String   @default("both") // professional, clinic, both
+  isActive     Boolean  @default(true)
+  displayOrder Int      @default(0)
+  createdBy    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Certification {
+  id           String   @id @default(cuid())
+  name         String   @unique
+  nameAr       String?
+  abbreviation String?
+  description  String?
+  isActive     Boolean  @default(true)
+  displayOrder Int      @default(0)
+  createdBy    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model AdminPermission {
+  id                       String   @id @default(cuid())
+  userId                   String   @unique
+  canVerifyProfessionals   Boolean  @default(false)
+  canVerifyClinics         Boolean  @default(false)
+  canVerifyDocuments       Boolean  @default(false)
+  canManageAdmins          Boolean  @default(false)
+  canViewAnalytics         Boolean  @default(false)
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  createdBy                String?
+}
+
+model AdminNote {
+  id           String        @id @default(cuid())
+  targetUserId String
+  targetType   String        // professional, clinic
+  adminId      String
+  note         String
+  noteType     AdminNoteType @default(general)
+  createdAt    DateTime      @default(now())
+
+  @@index([targetUserId])
+  @@index([adminId])
+}
+
+model ShiftInvitation {
+  id              String                @id @default(cuid())
+  shiftId         String
+  clinicId        String
+  professionalId  String
+  status          ShiftInvitationStatus @default(pending)
+  message         String?
+  createdAt       DateTime              @default(now())
+  respondedAt     DateTime?
+
+  shift        Shift   @relation(fields: [shiftId], references: [id], onDelete: Cascade)
+  clinic       Clinic  @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+  professional Profile @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+
+  @@unique([shiftId, professionalId])
+  @@index([shiftId])
+  @@index([clinicId])
+  @@index([professionalId])
 }

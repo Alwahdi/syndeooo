@@ -55,6 +55,57 @@ export const auth = betterAuth({
         .map((o) => o.trim())
         .filter(Boolean)
     : [],
+
+  user: {
+    additionalFields: {
+      selectedRole: {
+        type: "string",
+        required: false,
+        input: true,
+        fieldName: "selectedRole",
+      },
+    },
+  },
+
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user) => {
+          const role =
+            (user.selectedRole as "professional" | "clinic") || "professional";
+
+          // Create user role
+          await database.userRole.create({
+            data: { userId: user.id, role },
+          });
+
+          // Create empty profile or clinic record
+          if (role === "professional") {
+            await database.profile.create({
+              data: {
+                userId: user.id,
+                email: user.email,
+                fullName: user.name,
+              },
+            });
+          } else if (role === "clinic") {
+            await database.clinic.create({
+              data: {
+                userId: user.id,
+                email: user.email,
+                name: user.name,
+              },
+            });
+          }
+
+          // Create default user preferences
+          await database.userPreferences.create({
+            data: { userId: user.id },
+          });
+        },
+      },
+    },
+  },
 });
 
 export type Session = typeof auth.$Infer.Session.session;

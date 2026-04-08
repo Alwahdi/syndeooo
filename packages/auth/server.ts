@@ -1,10 +1,16 @@
 import "server-only";
 
 import { headers } from "next/headers";
-import { auth, type Session, type User } from "./auth";
+import { auth, type User } from "./auth";
 
-export { auth } from "./auth";
 export type { Session, User } from "./auth";
+export { auth } from "./auth";
+export {
+  getAuthRedirectPath,
+  isOnboardingComplete,
+  markOnboardingComplete,
+} from "./onboarding";
+export { assignRole, getUserRole, hasRole, isSuperAdmin } from "./roles";
 
 /**
  * Get the current session on the server side.

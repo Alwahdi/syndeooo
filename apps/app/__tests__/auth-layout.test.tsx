@@ -3,7 +3,11 @@ import { describe, expect, it, vi } from "vitest";
 
 // Mock @repo/design-system/components/mode-toggle
 vi.mock("@repo/design-system/components/mode-toggle", () => ({
-  ModeToggle: () => <button data-testid="mode-toggle">Toggle</button>,
+  ModeToggle: () => (
+    <button data-testid="mode-toggle" type="button">
+      Toggle
+    </button>
+  ),
 }));
 
 // Mock lucide-react
@@ -14,6 +18,8 @@ vi.mock("lucide-react", () => ({
 }));
 
 import AuthLayout from "../app/(unauthenticated)/layout";
+
+const syndeocareRegex = /syndeocare has transformed/i;
 
 describe("Unauthenticated Layout", () => {
   it("renders children", () => {
@@ -58,7 +64,7 @@ describe("Unauthenticated Layout", () => {
         <div>Content</div>
       </AuthLayout>
     );
-    expect(screen.getByText(/syndeocare has transformed/i)).toBeInTheDocument();
+    expect(screen.getByText(syndeocareRegex)).toBeInTheDocument();
     expect(screen.getByText("Healthcare Professional")).toBeInTheDocument();
   });
 

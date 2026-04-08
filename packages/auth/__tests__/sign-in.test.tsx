@@ -156,7 +156,7 @@ describe("SignIn component", () => {
     expect(button).toBeDisabled();
 
     // Resolve to clean up
-    resolveSignIn!({ data: { user: { id: "1" } } });
+    resolveSignIn?.({ data: { user: { id: "1" } } });
   });
 
   it("calls signIn.social with github provider", async () => {

@@ -1,20 +1,17 @@
-import { getActiveOrganizationId } from "@repo/auth/server";
+import { currentUser } from "@repo/auth/server";
 import { database } from "@repo/database";
+import {
+  AlertCircleIcon,
+  BriefcaseIcon,
+  CalendarIcon,
+  ClockIcon,
+  StarIcon,
+} from "lucide-react";
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
-import { env } from "@/env";
-import { AvatarStack } from "./components/avatar-stack";
-import { Cursors } from "./components/cursors";
 import { Header } from "./components/header";
 
-const title = "SyndeoCare";
-const description = "Healthcare coordination platform.";
-
-const CollaborationProvider = dynamic(() =>
-  import("./components/collaboration-provider").then(
-    (mod) => mod.CollaborationProvider
-  )
-);
+const title = "Dashboard";
+const description = "SyndeoCare Dashboard";
 
 export const metadata: Metadata = {
   title,
@@ -22,31 +19,212 @@ export const metadata: Metadata = {
 };
 
 const App = async () => {
-  const pages = await database.page.findMany();
-  const orgId = await getActiveOrganizationId();
+  const user = await currentUser();
+
+  if (!user) {
+    return null;
+  }
+
+  // Fetch user's role
+  const userRole = await database.userRole.findFirst({
+    where: { userId: user.id },
+  });
+
+  const role = userRole?.role ?? "professional";
+
+  // Fetch stats based on role
+  const now = new Date();
+
+  if (role === "clinic") {
+    const [activeShifts, totalBookings, pendingBookings] = await Promise.all([
+      database.shift.count({
+        where: {
+          clinic: { userId: user.id },
+          shiftDate: { gte: now },
+          status: "open",
+        },
+      }),
+      database.booking.count({
+        where: {
+          shift: { clinic: { userId: user.id } },
+        },
+      }),
+      database.booking.count({
+        where: {
+          shift: { clinic: { userId: user.id } },
+          status: "requested",
+        },
+      }),
+    ]);
+
+    return (
+      <>
+        <Header page="Dashboard" pages={["SyndeoCare"]}>
+          <div className="pr-4 text-muted-foreground text-sm">
+            Welcome back, {user.name}
+          </div>
+        </Header>
+        <div className="flex flex-1 flex-col gap-6 p-4 pt-0">
+          <div className="grid gap-4 md:grid-cols-3">
+            <StatCard
+              accent="primary"
+              icon={<BriefcaseIcon className="h-4 w-4" />}
+              label="Active Shifts"
+              value={activeShifts}
+            />
+            <StatCard
+              accent="accent"
+              icon={<CalendarIcon className="h-4 w-4" />}
+              label="Total Bookings"
+              value={totalBookings}
+            />
+            <StatCard
+              accent="warning"
+              icon={<AlertCircleIcon className="h-4 w-4" />}
+              label="Pending Review"
+              value={pendingBookings}
+            />
+          </div>
+          <div className="flex-1 rounded-xl border bg-card p-6">
+            <h2 className="mb-4 font-semibold text-lg">Quick Actions</h2>
+            <div className="grid gap-3 md:grid-cols-2">
+              <QuickAction
+                description="Create a shift listing for healthcare professionals"
+                href="/shifts"
+                title="Post a New Shift"
+              />
+              <QuickAction
+                description="Review and manage pending booking requests"
+                href="/bookings"
+                title="Review Bookings"
+              />
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  // Professional dashboard (default)
+  const [upcomingShifts, completedShifts, profile] = await Promise.all([
+    database.booking.count({
+      where: {
+        professional: { userId: user.id },
+        status: { in: ["confirmed", "accepted"] },
+        shift: { shiftDate: { gte: now } },
+      },
+    }),
+    database.booking.count({
+      where: {
+        professional: { userId: user.id },
+        status: "completed",
+      },
+    }),
+    database.profile.findUnique({
+      where: { userId: user.id },
+    }),
+  ]);
 
   return (
     <>
-      <Header page="Data Fetching" pages={["Building Your Application"]}>
-        {env.LIVEBLOCKS_SECRET && orgId && (
-          <CollaborationProvider orgId={orgId}>
-            <AvatarStack />
-            <Cursors />
-          </CollaborationProvider>
-        )}
-      </Header>
-      <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-        <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-          {pages.map((page) => (
-            <div className="aspect-video rounded-xl bg-muted/50" key={page.id}>
-              {page.name}
-            </div>
-          ))}
+      <Header page="Dashboard" pages={["SyndeoCare"]}>
+        <div className="pr-4 text-muted-foreground text-sm">
+          Welcome back, {user.name}
         </div>
-        <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+      </Header>
+      <div className="flex flex-1 flex-col gap-6 p-4 pt-0">
+        <div className="grid gap-4 md:grid-cols-3">
+          <StatCard
+            accent="primary"
+            icon={<CalendarIcon className="h-4 w-4" />}
+            label="Upcoming Shifts"
+            value={upcomingShifts}
+          />
+          <StatCard
+            accent="accent"
+            icon={<ClockIcon className="h-4 w-4" />}
+            label="Completed Shifts"
+            value={completedShifts}
+          />
+          <StatCard
+            accent="warning"
+            icon={<StarIcon className="h-4 w-4" />}
+            label="Rating"
+            value={
+              profile?.ratingAvg
+                ? `${Number(profile.ratingAvg).toFixed(1)}`
+                : "N/A"
+            }
+          />
+        </div>
+        <div className="flex-1 rounded-xl border bg-card p-6">
+          <h2 className="mb-4 font-semibold text-lg">Quick Actions</h2>
+          <div className="grid gap-3 md:grid-cols-2">
+            <QuickAction
+              description="Browse available shifts near you"
+              href="/shifts"
+              title="Find Shifts"
+            />
+            <QuickAction
+              description="Keep your qualifications and documents up to date"
+              href="/profile"
+              title="Update Profile"
+            />
+          </div>
+        </div>
       </div>
     </>
   );
 };
+
+function StatCard({
+  icon,
+  label,
+  value,
+  accent,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: number | string;
+  accent: "primary" | "accent" | "warning";
+}) {
+  const accentClasses = {
+    primary: "text-primary",
+    accent: "text-accent",
+    warning: "text-amber-500",
+  };
+
+  return (
+    <div className="rounded-xl border bg-card p-6">
+      <div className="flex items-center gap-2 text-muted-foreground">
+        {icon}
+        <span className="text-sm">{label}</span>
+      </div>
+      <div className={`mt-2 font-bold text-3xl ${accentClasses[accent]}`}>
+        {value}
+      </div>
+    </div>
+  );
+}
+
+function QuickAction({
+  href,
+  title,
+  description,
+}: {
+  href: string;
+  title: string;
+  description: string;
+}) {
+  return (
+    <a
+      className="rounded-lg border p-4 transition-colors hover:bg-muted/50"
+      href={href}
+    >
+      <div className="font-medium">{title}</div>
+      <div className="mt-1 text-muted-foreground text-sm">{description}</div>
+    </a>
+  );
+}
 
 export default App;

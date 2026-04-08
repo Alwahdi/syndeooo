@@ -4,16 +4,44 @@ import {
   noseconeOptionsWithToolbar,
   securityMiddleware,
 } from "@repo/security/proxy";
-import type { NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { env } from "./env";
 
 const securityHeaders = env.FLAGS_SECRET
   ? securityMiddleware(noseconeOptionsWithToolbar)
   : securityMiddleware(noseconeOptions);
 
-// Better Auth middleware checks for session cookie on protected routes
-// Security headers are applied in the callback
-export default authMiddleware(() => {
+const publicPaths = [
+  "/sign-in",
+  "/sign-up",
+  "/api/auth",
+  "/.well-known",
+  "/verify-email",
+  "/api/job-roles",
+];
+
+const isPublicPath = (pathname: string) =>
+  publicPaths.some((p) => pathname.startsWith(p));
+
+export default authMiddleware((request: NextRequest) => {
+  const { pathname } = request.nextUrl;
+
+  // Allow public paths without auth check
+  if (isPublicPath(pathname)) {
+    return securityHeaders();
+  }
+
+  // Check for Better Auth session cookie
+  const sessionToken =
+    request.cookies.get("better-auth.session_token")?.value ??
+    request.cookies.get("__Secure-better-auth.session_token")?.value;
+
+  if (!sessionToken) {
+    const signInUrl = new URL("/sign-in", request.url);
+    signInUrl.searchParams.set("callbackUrl", pathname);
+    return NextResponse.redirect(signInUrl);
+  }
+
   return securityHeaders();
 });
 

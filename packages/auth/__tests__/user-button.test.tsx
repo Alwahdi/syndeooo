@@ -219,7 +219,7 @@ describe("UserButton component", () => {
       },
     });
 
-    const user2 = userEvent.setup();
+    const _user2 = userEvent.setup();
     const { container } = render(<UserButton />);
 
     // The sr-only "User menu" text should be present

@@ -9,7 +9,9 @@ const publicPaths = [
 ];
 
 const isPublicPath = (pathname: string) =>
-  publicPaths.some((path) => pathname === path || pathname.startsWith(path + "/"));
+  publicPaths.some(
+    (path) => pathname === path || pathname.startsWith(`${path}/`)
+  );
 
 /**
  * Auth middleware that checks for a session cookie.
@@ -17,7 +19,9 @@ const isPublicPath = (pathname: string) =>
  * Passes through to a callback for additional middleware composition.
  */
 export const authMiddleware = (
-  callback?: (request: NextRequest) => Response | void | Promise<Response | void>
+  callback?: (
+    request: NextRequest
+  ) => Response | undefined | Promise<Response | undefined>
 ) => {
   return async (request: NextRequest) => {
     const { pathname } = request.nextUrl;
@@ -26,7 +30,9 @@ export const authMiddleware = (
     if (isPublicPath(pathname)) {
       if (callback) {
         const result = await callback(request);
-        if (result) return result;
+        if (result) {
+          return result;
+        }
       }
       return NextResponse.next();
     }
@@ -46,7 +52,9 @@ export const authMiddleware = (
     // Run additional middleware if provided
     if (callback) {
       const result = await callback(request);
-      if (result) return result;
+      if (result) {
+        return result;
+      }
     }
 
     return NextResponse.next();
