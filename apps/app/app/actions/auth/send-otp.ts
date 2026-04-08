@@ -32,7 +32,7 @@ export async function sendOtp(email: string) {
   }
 
   // Generate 6-digit code
-  const code = String(randomInt(100_000, 999_999));
+  const code = String(randomInt(100_000, 1_000_000));
   const expiresAt = new Date(Date.now() + OTP_EXPIRY_MINUTES * 60 * 1000);
 
   // Store code
